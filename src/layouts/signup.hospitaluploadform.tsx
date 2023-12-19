@@ -1,11 +1,8 @@
 "use client";
+import { FileData } from "@/types/Signuptypes";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-type FileData = {
-  file: File | null;
-  fileName: string;
-};
 
 type SignupAccountTypeLayoutProps = {
   onNext: () => void;
