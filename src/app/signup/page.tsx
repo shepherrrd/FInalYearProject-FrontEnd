@@ -3,7 +3,6 @@
 import SignupAccountTypeLayout from "@/layouts/signup.accountype";
 import SignupUploadForm from "@/layouts/signup.uploadform";
 import React, { useState } from "react";
-
 export default function SignUp() {
   const [step, setStep] = useState(1);
   const [accountType, setAccountType] = useState("");
@@ -25,12 +24,7 @@ export default function SignUp() {
         id="HeaderNav"
         className="bg-white flex flex-col justify-end gap-4 w-full h-20 items-start"
       >
-        <img
-          src="https://file.rendit.io/n/8kOf8BEHwKoHju0ZZbvi.svg"
-          alt="Logo"
-          id="Logo"
-          className="ml-[702px] w-8"
-        />
+        <img src="logo.svg" alt="Logo" id="Logo" className="ml-[702px] w-8" />
         <div
           id="Divider"
           className="bg-[rgba(102,_102,_102,_0.25)] w-full h-px"
@@ -55,7 +49,7 @@ export default function SignUp() {
           <div className="flex flex-row ml-12 gap-8 w-5/6 items-start">
             <div
               id="BG"
-              className="text-center text-xs text-white bg-[url(https://file.rendit.io/n/HcUo51vdn787q3avOEec.svg)] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row w-5 items-start pt-px px-2"
+              className="text-center text-xs text-white bg-reddot bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row w-5 items-start pt-px px-2"
             >
               1
             </div>
@@ -63,7 +57,7 @@ export default function SignUp() {
               <div className="opacity-35 bg-[#333333] w-2/5 h-px" />
               <div
                 id="BG1"
-                className="text-center text-xs text-white bg-[url(https://file.rendit.io/n/UMscQMzu5kH2TlzhuUmb.svg)] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row w-5 items-start pt-px px-2"
+                className="text-center text-xs text-white bg-blackdot bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row w-5 items-start pt-px px-2"
               >
                 2
               </div>
@@ -71,7 +65,7 @@ export default function SignUp() {
                 <div className="opacity-35 bg-[#333333] w-5/6 h-px" />
                 <div
                   id="BG2"
-                  className="text-center text-xs text-white bg-[url(https://file.rendit.io/n/UMscQMzu5kH2TlzhuUmb.svg)] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row w-5 items-start pt-px px-2"
+                  className="text-center text-xs text-white bg-blackdot bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row w-5 items-start pt-px px-2"
                 >
                   3
                 </div>
@@ -101,7 +95,7 @@ export default function SignUp() {
             >
               <div
                 id="BG4"
-                className="text-center text-xs font-['Abhaya_Libre_Medium'] text-white bg-[url(https://file.rendit.io/n/0GJoeOh7bQRSTaMbp3Ba.svg)] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row mt-1 w-6 h-6 items-start pt-1 px-2"
+                className="text-center text-xs font-['Abhaya_Libre_Medium'] text-white bg-blackdot bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row mt-1 w-6 h-6 items-start pt-1 px-2"
               >
                 1
               </div>
@@ -142,7 +136,7 @@ export default function SignUp() {
               >
                 <div
                   id="BG4"
-                  className="text-center text-xs font-['Abhaya_Libre_Medium'] text-white bg-[url(https://file.rendit.io/n/0GJoeOh7bQRSTaMbp3Ba.svg)] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row mt-1 w-6 h-6 items-start pt-1 px-2"
+                  className="text-center text-xs font-['Abhaya_Libre_Medium'] text-white bg-blackdot bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row mt-1 w-6 h-6 items-start pt-1 px-2"
                 >
                   2
                 </div>
@@ -155,7 +149,7 @@ export default function SignUp() {
           <div className="bg-white flex flex-row gap-3 w-full h-20 items-start pt-6 px-6 rounded-[24px]">
             <div
               id="BG5"
-              className="text-center text-xs font-['Abhaya_Libre_Medium'] text-white bg-[url(https://file.rendit.io/n/0GJoeOh7bQRSTaMbp3Ba.svg)] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row mt-1 w-6 h-6 items-start pt-1 px-2"
+              className="text-center text-xs font-['Abhaya_Libre_Medium'] text-white bg-blackdot bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row mt-1 w-6 h-6 items-start pt-1 px-2"
             >
               3
             </div>

@@ -26,7 +26,7 @@ const SignupAccountTypeLayout: React.FC<SignupAccountTypeLayoutProps> = ({
       <div className="flex flex-row gap-3 w-1/3 items-start">
         <div
           id="BG"
-          className="text-center text-xs font-['Abhaya_Libre_Medium'] text-white bg-[url(https://file.rendit.io/n/0GJoeOh7bQRSTaMbp3Ba.svg)] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row mt-1 w-6 h-6 items-start pt-1 px-2"
+          className="text-center text-xs font-['Abhaya_Libre_Medium'] text-white bg-blackdot bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row mt-1 w-6 h-6 items-start pt-1 px-2"
         >
           1
         </div>
