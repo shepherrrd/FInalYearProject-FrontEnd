@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 type SignupAccountTypeLayoutProps = {
   onNext: () => void;
   accountType: string;
@@ -18,6 +18,15 @@ const SignupAccountTypeLayout: React.FC<SignupAccountTypeLayoutProps> = ({
 }) => {
   const [accountType, setAccountType] = useState(accountTypeProp);
   const [location, setLocation] = useState(locationProp);
+
+  const handleSetAccountType = (value: string) => {
+    console.log(value);
+    setAccountType(value);
+  };
+  useEffect(() => {
+    setAccountTypeProp(accountType);
+    setLocationProp(location);
+  }, [accountType, location]);
   return (
     <div
       className="bg-white flex flex-col justify-center gap-6 w-full items-start p-6 rounded-[24px]"
@@ -38,13 +47,13 @@ const SignupAccountTypeLayout: React.FC<SignupAccountTypeLayoutProps> = ({
         </div>
         <select
           value={accountType}
-          onChange={(e) => setAccountType(e.target.value)}
+          onChange={(e) => handleSetAccountType(e.target.value)}
           className="border-solid border-[rgba(102,_102,_102,_0.35)] flex flex-row justify-end w-full h-12 items-start pt-4 px-6 border rounded-lg"
         >
           <option>Select Account Type</option>
           {/* Add your options here */}
           <option value="hospital">Hospital</option>
-          <option value="pharmacy">Pharmacy</option>
+          <option value="research">Pharmacy</option>
         </select>
       </div>
       <div className="flex flex-col gap-5 w-full font-['Poppins'] items-start">

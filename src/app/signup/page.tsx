@@ -1,8 +1,9 @@
 "use client";
 
 import SignupAccountTypeLayout from "@/layouts/signup.accountype";
-import SignupUploadForm from "@/layouts/signup.uploadform";
-import React, { useState } from "react";
+import SignupUploadForm from "@/layouts/signup.hospitaluploadform";
+import SignupResearchCenterFormLayout from "@/layouts/signup.researchcenterform";
+import React, { useState, useEffect } from "react";
 export default function SignUp() {
   const [step, setStep] = useState(1);
   const [accountType, setAccountType] = useState("");
@@ -12,9 +13,14 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
 
+  const handleSetStep = (value: number) => {
+    console.log(step);
+    setStep(value);
+  };
   const nextStep = () => {
     setStep(step + 1);
   };
+
   return (
     <div
       id="LoginPageRoot"
@@ -91,7 +97,7 @@ export default function SignUp() {
           {step !== 1 && (
             <div
               className="bg-white flex flex-row gap-3 w-full h-20 items-start pt-6 px-6 rounded-[24px]"
-              onClick={() => setStep(1)}
+              onClick={() => handleSetStep(1)}
             >
               <div
                 id="BG4"
@@ -106,7 +112,6 @@ export default function SignUp() {
           )}
           <div className="flex flex-col ml-px gap-6 w-full items-start">
             {/* The place for the account layout position */}
-
             <SignupAccountTypeLayout
               onNext={nextStep}
               accountType={accountType}
@@ -115,7 +120,6 @@ export default function SignUp() {
               setLocation={setLocation}
               style={{ display: step === 1 ? "block" : "none" }}
             />
-
             <SignupUploadForm
               onNext={nextStep}
               name={name}
@@ -126,13 +130,23 @@ export default function SignUp() {
               setEmail={setEmail}
               address={address}
               setAddress={setAddress}
-              style={{ display: step === 1 ? "block" : "none" }}
+              style={{
+                display:
+                  step === 2 && accountType === "hospital" ? "block" : "none",
+              }}
+            />
+            <SignupResearchCenterFormLayout
+              onNext={nextStep}
+              style={{
+                display:
+                  step === 2 && accountType === "research" ? "block" : "none",
+              }}
             />
 
             {step !== 2 && (
               <div
                 className="bg-white flex flex-row gap-3 w-full h-20 items-start pt-6 px-6 rounded-[24px]"
-                onClick={() => setStep(2)}
+                onClick={() => handleSetStep(2)}
               >
                 <div
                   id="BG4"
@@ -154,7 +168,7 @@ export default function SignUp() {
               3
             </div>
             <div className="text-center text-2xl text-[#333333]">
-              Login info
+              Login info {accountType} {step}
             </div>
           </div>
         </div>
