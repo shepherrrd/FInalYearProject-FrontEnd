@@ -11,6 +11,7 @@ type SignupAccountTypeLayoutProps = {
   setEmail: (value: string) => void;
   address: string;
   setAddress: (value: string) => void;
+  style?: React.CSSProperties;
 };
 const SignupUploadForm: React.FC<SignupAccountTypeLayoutProps> = ({
   onNext,
@@ -22,13 +23,17 @@ const SignupUploadForm: React.FC<SignupAccountTypeLayoutProps> = ({
   setEmail,
   address,
   setAddress,
+  style,
 }) => {
   const [CacDocument, SetCacDocument] = useState("No File Chosen");
   const [fileName, setFileName] = useState("No File Chosen");
   const [NafdacDocument, setNafdacDocument] = useState("No File Chosen");
   const [bvnDocument, SetbvnDOcument] = useState("No File Chosen");
   return (
-    <div className="bg-white flex flex-col justify-center gap-6 w-full font-['Poppins'] items-start p-6 rounded-[24px]">
+    <div
+      className="bg-white flex flex-col justify-center gap-6 w-full font-['Poppins'] items-start p-6 rounded-[24px]"
+      style={style}
+    >
       <div className="flex flex-col justify-between gap-2 w-full items-start">
         <div className="flex flex-row gap-3 w-1/3 items-start">
           <div

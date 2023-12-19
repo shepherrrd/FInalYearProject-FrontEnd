@@ -122,31 +122,35 @@ export default function SignUp() {
               style={{ display: step === 1 ? "block" : "none" }}
             />
 
-            {step === 2 && (
-              <SignupUploadForm
-                onNext={nextStep}
-                name={name}
-                setName={setName}
-                hospital={hospital}
-                setHospital={setHospital}
-                email={email}
-                setEmail={setEmail}
-                address={address}
-                setAddress={setAddress}
-              />
-            )}
+            <SignupUploadForm
+              onNext={nextStep}
+              name={name}
+              setName={setName}
+              hospital={hospital}
+              setHospital={setHospital}
+              email={email}
+              setEmail={setEmail}
+              address={address}
+              setAddress={setAddress}
+              style={{ display: step === 1 ? "block" : "none" }}
+            />
 
-            <div className="bg-white flex flex-row gap-3 w-full h-20 items-start pt-6 px-6 rounded-[24px]">
+            {step !== 2 && (
               <div
-                id="BG4"
-                className="text-center text-xs font-['Abhaya_Libre_Medium'] text-white bg-[url(https://file.rendit.io/n/0GJoeOh7bQRSTaMbp3Ba.svg)] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row mt-1 w-6 h-6 items-start pt-1 px-2"
+                className="bg-white flex flex-row gap-3 w-full h-20 items-start pt-6 px-6 rounded-[24px]"
+                onClick={() => setStep(2)}
               >
-                2
+                <div
+                  id="BG4"
+                  className="text-center text-xs font-['Abhaya_Libre_Medium'] text-white bg-[url(https://file.rendit.io/n/0GJoeOh7bQRSTaMbp3Ba.svg)] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row mt-1 w-6 h-6 items-start pt-1 px-2"
+                >
+                  2
+                </div>
+                <div className="text-center text-2xl text-[#333333]">
+                  Upload Form
+                </div>
               </div>
-              <div className="text-center text-2xl text-[#333333]">
-                Upload Form
-              </div>
-            </div>
+            )}
           </div>
           <div className="bg-white flex flex-row gap-3 w-full h-20 items-start pt-6 px-6 rounded-[24px]">
             <div
