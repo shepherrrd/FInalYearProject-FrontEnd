@@ -1,6 +1,6 @@
-# Project Name
+# Final Year Project fronend
 
-This is a brief description of your project.
+This is a brief description of your The final year project.
 
 ## Installation
 
