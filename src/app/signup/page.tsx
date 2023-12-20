@@ -61,6 +61,7 @@ export default function SignUp() {
     fileName: "",
   });
 
+  console.log(NafdacDocument);
   const router = useRouter();
 
   const navigateToSignin = () => {
@@ -70,41 +71,48 @@ export default function SignUp() {
   const [ResearchCenterSignupDetails, setResearchCenterSignupDetails] =
     useState<ResearchCenterSignupDetailsFormData>({
       accountType: AccountType.ResearchCenter,
-      location: "",
-      title: "",
-      firstName: "",
-      middleName: "",
-      lastName: "",
-      institution: "",
-      email: "",
-      passportPhoto: { file: null, fileName: "" },
-      degree: { file: null, fileName: "" },
-      researchProposal: { file: null, fileName: "" },
-      irbApproval: { file: null, fileName: "" },
-      password: "",
-      confirmPassword: "",
+      location: location,
+      title: title,
+      firstName: firstName,
+      middleName: middleName,
+      lastName: lastName,
+      institution: institution,
+      email: ResearchCenteremail,
+      passportPhoto: passportPhoto,
+      degree: degree,
+      researchProposal: researchProposal,
+      irbApproval: irbApproval,
+      password: password,
+      confirmPassword: confirmPassword,
     });
 
   const [HospitalSignupDetails, setHospitalSignupDetails] =
     useState<HospitalSignupDetailsFormData>({
       accountType: AccountType.Hospital,
-      location: "",
-      hospitalName: "",
-      hospitalEmail: "",
-      websiteAddress: "",
-      cacDocument: { file: null, fileName: "" },
-      NafdacDocument: { file: null, fileName: "" },
-      password: "",
-      confirmPassword: "",
+      Location: location,
+      HospitalName: hospitalName,
+      HospitalEmail: Hospitalemail,
+      WebsiteAddress: websiteAddress,
+      CacDocument: cacDocument,
+      NafdacDocument: NafdacDocument,
+      Password: password,
+      ConfirmPassword: confirmPassword,
     });
   const handleSetStep = (value: number) => {
-    console.log(step);
     setStep(value);
   };
   const nextStep = () => {
     setStep(step + 1);
+    console.log(
+      NafdacDocument,
+      cacDocument,
+      location,
+      accountType,
+      Hospitalemail,
+      websiteAddress,
+      hospitalName
+    );
   };
-
   const validpassword = (password: string) => {
     const hasMinimumLength = password.length >= 8;
     const hasLetters = /[a-zA-Z]/.test(password);
@@ -161,16 +169,16 @@ export default function SignUp() {
       case AccountType.Hospital: {
         setHospitalSignupDetails({
           accountType: accountType,
-          location: location,
-          hospitalName: hospitalName,
-          hospitalEmail: Hospitalemail,
-          websiteAddress: websiteAddress,
-          cacDocument: cacDocument,
+          Location: location,
+          HospitalName: hospitalName,
+          HospitalEmail: Hospitalemail,
+          WebsiteAddress: websiteAddress,
+          CacDocument: cacDocument,
           NafdacDocument: NafdacDocument,
-          password: password,
-          confirmPassword: confirmPassword,
+          Password: password,
+          ConfirmPassword: confirmPassword,
         });
-        saveToLocalStorage("HospitalSignupDetails", HospitalSignupDetails);
+
         const signup = await submitHospitalSignupDetails(HospitalSignupDetails);
         if (signup.status) {
           toast.success(signup.message);
@@ -199,6 +207,7 @@ export default function SignUp() {
               id="Logo"
               className="ml-[302px] w-8"
               width={32}
+              height={32}
             />
             <div
               id="Divider"

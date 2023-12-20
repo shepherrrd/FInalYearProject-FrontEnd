@@ -49,7 +49,7 @@ export async function submitResearchCenterSignupDetails(
 
       return {
         status: false,
-        message: error.response.data.message || "Something went wrong.",
+        message: error.response.data.message,
       };
     } else {
       // Handle unknown errors
@@ -66,7 +66,7 @@ export async function submitHospitalSignupDetails(
 
   Object.keys(formData).forEach((key) => {
     const value = formData[key as keyof HospitalSignupDetailsFormData];
-
+    console.log(value);
     if (value && typeof value === "object" && "file" in value && value.file) {
       // Append the file only if it's not null
       form.append(key, value.file, value.fileName);
@@ -75,12 +75,16 @@ export async function submitHospitalSignupDetails(
       form.append(key, value.toString());
     }
   });
+  form.forEach((value, key) => {
+    console.log(key + " -" + value);
+  });
 
   try {
     const response = await axios.post(API.HOSPITAL_SIGNUP, form);
     if (response.status === 200) {
       return { status: true, message: "Successfully submitted!" };
     } else if (response.status === 400) {
+      console.log(response.data);
       return {
         status: false,
         message: response.data.message,
@@ -91,10 +95,11 @@ export async function submitHospitalSignupDetails(
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       // Handle known error status codes here if needed
+      console.log(error.response);
       if (error.response.status === 400) {
         return {
           status: false,
-          message: "Submission failed due to invalid data.",
+          message: error.response.data.message || "Something went wrong.",
         };
       }
 

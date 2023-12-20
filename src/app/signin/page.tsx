@@ -47,6 +47,8 @@ export default function SignIn() {
             <Image
               src="/logo.svg"
               alt="Logo"
+              width={36}
+              height={36}
               id="Logo"
               className="ml-[302px] w-8"
             />
@@ -79,6 +81,8 @@ export default function SignIn() {
                         <Image
                           src={iconSrc}
                           alt="Group1"
+                          width={36}
+                          height={36}
                           className="mt-2 w-5"
                           onClick={togglePasswordVisibility}
                         />

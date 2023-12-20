@@ -34,63 +34,46 @@ const SignupUploadForm: React.FC<SignupAccountTypeLayoutProps> = ({
   cacDocument: cacDocumentProp,
   setCacDocument: setCacDocumentProp,
 }) => {
-  const [hospitalName, setHospitalName] = useState(hospitalNameProp);
-  const [hospitalEmail, setHospitalEmail] = useState(hospitalEmailProp);
-  const [websiteAddress, setWebsiteAddress] = useState(websiteAddressProp);
-  const [nafdacDocument, setNafdacDocument] = useState(nafdacDocumentProp);
-  const [cacDocument, setCacDocument] = useState(cacDocumentProp);
+  const [hospitalName, setHospitalName] = useState<string>(hospitalNameProp);
+  const [hospitalEmail, setHospitalEmail] = useState<string>(hospitalEmailProp);
+  const [websiteAddress, setWebsiteAddress] =
+    useState<string>(websiteAddressProp);
+  const [nafdacDocument, setNafdacDocument] =
+    useState<FileData>(nafdacDocumentProp);
+  const [cacDocument, setCacDocument] = useState<FileData>(cacDocumentProp);
 
   const HandleSetHospitalEmail = (email: string) => {
     if (!isValidEmail(email)) {
       toast.error("Invalid email address");
     } else {
+      console.log(email);
       setHospitalEmail(email);
     }
   };
-  const HandleSetCacDocument = (event: any) => {
-    const file = event.target.files[0];
-    const fileName = file.name;
-    const fileType = file.type;
-    if (
-      (file &&
-        fileName &&
-        fileName.length > 0 &&
-        file.size > 0 &&
-        file.size < 1000000 &&
-        fileType === "application/pdf") ||
-      fileType === "image/jpeg"
-    ) {
-      setCacDocument({ file, fileName });
-      toast.success("File uploaded successfully");
-    } else {
-      file.size > 1000000 ? toast.error("File too large") : "";
-      !(fileType === "application/pdf" || fileType === "image/jpeg")
-        ? toast.error(
-            "Invalid file .File type not supported Must be pdf or jpeg"
-          )
-        : "";
-    }
-  };
-
   useEffect(() => {
-    setHospitalName(hospitalName);
-    setHospitalEmail(hospitalEmail);
-    setWebsiteAddress(websiteAddress);
-    setNafdacDocument(nafdacDocument);
-    setCacDocument(cacDocument);
+    setHospitalNameProp(hospitalName);
+    setHospitalEmailProp(hospitalEmail);
+    setWebsiteAddressProp(websiteAddress);
+    setNafdacDocumentProp(nafdacDocument);
+    setCacDocumentProp(cacDocument);
   }, [
     hospitalName,
     hospitalEmail,
     websiteAddress,
     nafdacDocument,
     cacDocument,
+    setHospitalNameProp,
+    setHospitalEmailProp,
+    setWebsiteAddressProp,
+    setNafdacDocumentProp,
+    setCacDocumentProp,
   ]);
 
   const handleFileChange =
     (setFileData: React.Dispatch<React.SetStateAction<FileData>>) =>
     (event: ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files ? event.target.files[0] : null;
-
+      console.log(file);
       if (file) {
         const { name: fileName, size: fileSize, type: fileType } = file;
 
@@ -108,7 +91,6 @@ const SignupUploadForm: React.FC<SignupAccountTypeLayoutProps> = ({
         }
       }
     };
-
   return (
     <>
       <ToastContainer />
@@ -168,7 +150,9 @@ const SignupUploadForm: React.FC<SignupAccountTypeLayoutProps> = ({
                 </div>
                 <input
                   type="text"
-                  onChange={(e) => setWebsiteAddress(e.target.value)}
+                  onChange={(e) => {
+                    setWebsiteAddress(e.target.value);
+                  }}
                   id="TextField4"
                   className="border-solid border-[rgba(102,_102,_102,_0.35)] w-full h-12 border rounded-lg"
                 />

@@ -1,10 +1,10 @@
 const IsLive = false;
 const API_URL = IsLive
   ? "https://api.covidresources.in"
-  : "http://localhost:5000";
+  : "https://localhost:7028";
 
 export const API = {
-  HOSPITAL_SIGNUP: `${API_URL}/api/hospital-signup`,
+  HOSPITAL_SIGNUP: `${API_URL}/api/Registration/RegisterHospital`,
   LOGIN: `${API_URL}/api/login`,
   RESEARCH_CENTER_SIGNUP: `${API_URL}/api/research-center-signup`,
   GET_HOSPITALS: `${API_URL}/api/hospitals`,

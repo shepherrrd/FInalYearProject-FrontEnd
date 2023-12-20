@@ -32,14 +32,14 @@ export type ResearchCenterSignupDetailsFormData = {
 
 export type HospitalSignupDetailsFormData = {
   accountType: AccountType;
-  location: string;
-  hospitalName: string;
-  hospitalEmail: string;
-  websiteAddress: string;
-  cacDocument: FileData;
+  Location: string;
+  HospitalName: string;
+  HospitalEmail: string;
+  WebsiteAddress: string;
+  CacDocument: FileData;
   NafdacDocument: FileData;
-  password: string;
-  confirmPassword: string;
+  Password: string;
+  ConfirmPassword: string;
 };
 
 export type SignupApiResponse = {

@@ -97,6 +97,8 @@ const LoginInforFormLayout: React.FC<loginInforFormLayoutProps> = ({
                 src={iconSrc}
                 alt="Group1"
                 className="mt-2 w-5"
+                width={32}
+                height={32}
               />
               <div className="text-right text-lg text-[rgba(102,_102,_102,_0.8)]">
                 {passwordvisibletext}
@@ -155,6 +157,8 @@ const LoginInforFormLayout: React.FC<loginInforFormLayoutProps> = ({
             src="/notrobot.svg"
             alt="Googlerecaptchaofficial"
             className="mt-0 w-12"
+            width={32}
+            height={32}
           />
         </div>
         <button
