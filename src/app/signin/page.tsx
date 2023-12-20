@@ -50,7 +50,6 @@ export default function SignIn() {
               width={36}
               height={36}
               id="Logo"
-              className="ml-[302px] w-8"
             />
             <div
               id="SignIn1"
@@ -83,7 +82,6 @@ export default function SignIn() {
                           alt="Group1"
                           width={36}
                           height={36}
-                          className="mt-2 w-5"
                           onClick={togglePasswordVisibility}
                         />
                         <div
@@ -115,10 +113,10 @@ export default function SignIn() {
                     </button>
                     <div className="text-[#333333]  font-['Poppins'] w-full">
                       By continuing, you agree to the{" "}
-                      <text className="underline text-[#111111] ">
+                      <span className="underline text-[#111111] ">
                         Terms of use
-                      </text>
-                      <text className="text-[#666666]"> </text>
+                      </span>
+                      <span className="text-[#666666]"> </span>
                       <div>and</div>
                       <span className="text-[#666666]"> </span>
                       <span className="underline text-[#111111]">

@@ -15,7 +15,6 @@ export default function Home() {
           src="/logo.svg"
           width={36}
           height={36}
-          className="aspect-square object-contain object-center w-9 overflow-hidden shrink-0 max-w-full"
           alt="Logo"
         />
         <nav className="flex items-stretch justify-between gap-5">
@@ -44,13 +43,7 @@ export default function Home() {
                 Empowering Health through Shared Data
               </p>
             </div>
-            <Image
-              src="./vector.svg"
-              alt="Vector"
-              width={500}
-              height={500}
-              className="w-min align-middle ml-5 max-md:hidden mb-3"
-            />
+            <Image src="./vector.svg" alt="Vector" width={500} height={500} />
           </div>
 
           <div className="flex items-stretch gap-5 ">

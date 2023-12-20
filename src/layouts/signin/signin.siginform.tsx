@@ -26,11 +26,7 @@ const SignInForm = () => {
                 Your password
               </div>
               <div className="flex flex-row gap-3 w-16 items-start">
-                <Image
-                  src="/eyepassword.svg"
-                  alt="Group"
-                  className="mt-2 w-5"
-                />
+                <Image src="/eyepassword.svg" alt="Group" />
                 <div className="text-right text-lg text-[rgba(102,_102,_102,_0.8)]">
                   Hide
                 </div>

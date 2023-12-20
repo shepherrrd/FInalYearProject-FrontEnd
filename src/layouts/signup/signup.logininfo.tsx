@@ -96,7 +96,6 @@ const LoginInforFormLayout: React.FC<loginInforFormLayoutProps> = ({
                 onClick={togglePasswordVisibility}
                 src={iconSrc}
                 alt="Group1"
-                className="mt-2 w-5"
                 width={32}
                 height={32}
               />
@@ -156,7 +155,6 @@ const LoginInforFormLayout: React.FC<loginInforFormLayoutProps> = ({
           <Image
             src="/notrobot.svg"
             alt="Googlerecaptchaofficial"
-            className="mt-0 w-12"
             width={32}
             height={32}
           />

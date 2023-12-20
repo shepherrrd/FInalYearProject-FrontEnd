@@ -207,14 +207,7 @@ export default function SignUp() {
             id="HeaderNav"
             className="bg-white flex flex-col justify-end gap-4 w-full h-20 items-start"
           >
-            <Image
-              src="logo.svg"
-              alt="Logo"
-              id="Logo"
-              className="ml-[302px] w-8"
-              width={32}
-              height={32}
-            />
+            <Image src="logo.svg" alt="Logo" id="Logo" width={32} height={32} />
             <div
               id="Divider"
               className="bg-[rgba(102,_102,_102,_0.25)] w-full h-px"
