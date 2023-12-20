@@ -13,6 +13,8 @@ export default function Home() {
         <Image
           loading="lazy"
           src="/logo.svg"
+          width={36}
+          height={36}
           className="aspect-square object-contain object-center w-9 overflow-hidden shrink-0 max-w-full"
           alt="Logo"
         />
@@ -45,6 +47,8 @@ export default function Home() {
             <Image
               src="./vector.svg"
               alt="Vector"
+              width={500}
+              height={500}
               className="w-min align-middle ml-5 max-md:hidden mb-3"
             />
           </div>

@@ -5,9 +5,10 @@ import { isValidEmail } from "@/utilities/utils";
 import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function SignIn() {
-  console.log("SignIn");
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -148,9 +149,10 @@ export default function SignIn() {
             </div>
             <button
               id="Button2"
+              onClick={() => router.push("/signup", { scroll: false })}
               className="text-center text-xl text-[#111111] border-solid border-[#111111] flex flex-row justify-center pt-4 w-full h-16 cursor-pointer items-start border rounded-[40px]"
             >
-              Create an account {email},{password}
+              Create an account
             </button>
           </div>
           <div
