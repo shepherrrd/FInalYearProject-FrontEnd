@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -57,7 +58,7 @@ const LoginInforFormLayout: React.FC<loginInforFormLayoutProps> = ({
   useEffect(() => {
     SetPasswordProp(password);
     SetConfirmPasswordProp(confirmPassword);
-  }, [password, confirmPassword]);
+  });
   return (
     <div
       className="bg-white flex flex-col justify-between gap-8 w-full font-['Poppins'] items-start p-6 rounded-[24px]"
@@ -91,7 +92,7 @@ const LoginInforFormLayout: React.FC<loginInforFormLayoutProps> = ({
               Password
             </div>
             <div className="flex flex-row gap-3 w-16 items-start">
-              <img
+              <Image
                 onClick={togglePasswordVisibility}
                 src={iconSrc}
                 alt="Group1"
@@ -150,7 +151,7 @@ const LoginInforFormLayout: React.FC<loginInforFormLayoutProps> = ({
               I’m not a robot
             </div>
           </div>
-          <img
+          <Image
             src="/notrobot.svg"
             alt="Googlerecaptchaofficial"
             className="mt-0 w-12"

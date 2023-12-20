@@ -21,8 +21,8 @@ import {
   saveToLocalStorage,
   getFromLocalStorage,
 } from "@/utilities/localstorage";
-import { time } from "console";
 import { sleeps } from "@/utilities/utils";
+import Image from "next/image";
 
 export default function SignUp() {
   const [step, setStep] = useState(1);
@@ -60,7 +60,6 @@ export default function SignUp() {
     file: null,
     fileName: "",
   });
-  // useRouter
 
   const router = useRouter();
 
@@ -194,11 +193,12 @@ export default function SignUp() {
             id="HeaderNav"
             className="bg-white flex flex-col justify-end gap-4 w-full h-20 items-start"
           >
-            <img
+            <Image
               src="logo.svg"
               alt="Logo"
               id="Logo"
-              className="ml-[702px] w-8"
+              className="ml-[302px] w-8"
+              width={32}
             />
             <div
               id="Divider"
@@ -213,14 +213,11 @@ export default function SignUp() {
               <div className="text-center text-4xl font-medium leading-[68px] text-[#111111] ml-[177px]">
                 Join us
               </div>
-              <div
-                className="text-center text-lg text-[#666666] w-full"
-                onClick={navigateToSignin}
-              >
+              <div className="text-center text-lg text-[#666666] w-full">
                 There are many variations of passages of Lorem Ipsum available,
                 but the majority have suffered alteration in some form, by
-                injected humour, or randomised words which don't look even
-                slightly believable.{" "}
+                injected humour, or randomised words which don&apos;t look even
+                slightly believable.
               </div>
             </div>
             <div className="flex flex-col ml-8 gap-2 w-2/3 font-['Abhaya_Libre_Medium'] items-start">

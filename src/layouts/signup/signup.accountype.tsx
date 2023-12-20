@@ -30,7 +30,7 @@ const SignupAccountTypeLayout: React.FC<SignupAccountTypeLayoutProps> = ({
   useEffect(() => {
     setAccountTypeProp(accountType);
     setLocationProp(location);
-  }, [accountType, location]);
+  });
   return (
     <div
       className="bg-white flex flex-col justify-center gap-6 w-full items-start p-6 rounded-[24px]"

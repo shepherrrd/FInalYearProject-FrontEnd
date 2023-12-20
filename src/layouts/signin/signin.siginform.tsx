@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const SignInForm = () => {
   return (
     <div
@@ -24,8 +26,8 @@ const SignInForm = () => {
                 Your password
               </div>
               <div className="flex flex-row gap-3 w-16 items-start">
-                <img
-                  src="https://file.rendit.io/n/cfmsZatiEfWCFC5uTJeG.svg"
+                <Image
+                  src="/eyepassword.svg"
                   alt="Group"
                   className="mt-2 w-5"
                 />

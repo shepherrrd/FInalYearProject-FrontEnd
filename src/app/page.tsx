@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -9,9 +10,9 @@ export default function Home() {
       }}
     >
       <header className="flex w-full items-stretch justify-between gap-5 mt-7 pr-20 max-md:max-w-full max-md:flex-wrap max-md:pr-5">
-        <img
+        <Image
           loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/c69fa3d6b4927a19d201305ace351db4447237f220a6b00d9f0b05e8341abd86?apiKey=631aa5c6e5df4fa3ad6e5ba3f0b7efd5&"
+          src="/logo.svg"
           className="aspect-square object-contain object-center w-9 overflow-hidden shrink-0 max-w-full"
           alt="Logo"
         />
@@ -41,7 +42,7 @@ export default function Home() {
                 Empowering Health through Shared Data
               </p>
             </div>
-            <img
+            <Image
               src="./vector.svg"
               alt="Vector"
               className="w-min align-middle ml-5 max-md:hidden mb-3"
