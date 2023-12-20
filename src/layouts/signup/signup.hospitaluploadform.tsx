@@ -1,5 +1,6 @@
 "use client";
 import { FileData } from "@/types/Signuptypes";
+import { isValidEmail } from "@/utilities/utils";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -39,6 +40,13 @@ const SignupUploadForm: React.FC<SignupAccountTypeLayoutProps> = ({
   const [nafdacDocument, setNafdacDocument] = useState(nafdacDocumentProp);
   const [cacDocument, setCacDocument] = useState(cacDocumentProp);
 
+  const HandleSetHospitalEmail = (email: string) => {
+    if (!isValidEmail(email)) {
+      toast.error("Invalid email address");
+    } else {
+      setHospitalEmail(email);
+    }
+  };
   const HandleSetCacDocument = (event: any) => {
     const file = event.target.files[0];
     const fileName = file.name;
@@ -147,7 +155,7 @@ const SignupUploadForm: React.FC<SignupAccountTypeLayoutProps> = ({
             </div>
             <input
               type="email"
-              onChange={(e) => setHospitalEmail(e.target.value)}
+              onChange={(e) => HandleSetHospitalEmail(e.target.value)}
               id="TextField2"
               className="border-solid border-[rgba(102,_102,_102,_0.35)] w-full h-12 border rounded-lg"
             />

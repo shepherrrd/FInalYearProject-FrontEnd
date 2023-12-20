@@ -16,11 +16,13 @@ import {
 } from "@/types/Signuptypes";
 import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import Router from "next/router";
+import { useRouter } from "next/navigation";
 import {
   saveToLocalStorage,
   getFromLocalStorage,
 } from "@/utilities/localstorage";
+import { time } from "console";
+import { sleeps } from "@/utilities/utils";
 
 export default function SignUp() {
   const [step, setStep] = useState(1);
@@ -58,6 +60,14 @@ export default function SignUp() {
     file: null,
     fileName: "",
   });
+  // useRouter
+
+  const router = useRouter();
+
+  const navigateToSignin = () => {
+    sleeps(3);
+    router.push("/signin", { scroll: false });
+  };
   const [ResearchCenterSignupDetails, setResearchCenterSignupDetails] =
     useState<ResearchCenterSignupDetailsFormData>({
       accountType: AccountType.ResearchCenter,
@@ -143,7 +153,7 @@ export default function SignUp() {
           );
           if (signup.status) {
             toast.success(signup.message);
-            Router.push("/signin");
+            navigateToSignin();
           } else {
             toast.error(signup.message);
           }
@@ -165,7 +175,7 @@ export default function SignUp() {
         const signup = await submitHospitalSignupDetails(HospitalSignupDetails);
         if (signup.status) {
           toast.success(signup.message);
-          Router.push("/signin");
+          navigateToSignin();
         } else {
           toast.error(signup.message);
         }
@@ -203,7 +213,10 @@ export default function SignUp() {
               <div className="text-center text-4xl font-medium leading-[68px] text-[#111111] ml-[177px]">
                 Join us
               </div>
-              <div className="text-center text-lg text-[#666666] w-full">
+              <div
+                className="text-center text-lg text-[#666666] w-full"
+                onClick={navigateToSignin}
+              >
                 There are many variations of passages of Lorem Ipsum available,
                 but the majority have suffered alteration in some form, by
                 injected humour, or randomised words which don't look even

@@ -26,20 +26,17 @@ const LoginInforFormLayout: React.FC<loginInforFormLayoutProps> = ({
     return hasMinimumLength && hasLetters && hasNumbers && hasSymbols;
   }
   const [password, SetPassword] = useState<string>(passwordProp);
-  const [PasswordHidden, SetPasswordHidden] = useState<boolean>(true);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [iconSrc, setIconSrc] = useState("/eyepassword.svg");
+  const [passwordvisibletext, SetPasswordVisibleText] = useState("Show");
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible(!isPasswordVisible);
+    setIconSrc(isPasswordVisible ? "/eyepassword.svg" : "/eyeopen.svg");
+    SetPasswordVisibleText(isPasswordVisible ? "Show" : "Hide");
+  };
   const [confirmPassword, SetConfirmPassword] =
     useState<string>(confirmPasswordProp);
 
-  const HideorshowPassword = () => {
-    var x = document.getElementById("passwordfied");
-    if (x!.getAttribute("type") === "password") {
-      x!.setAttribute("type", "text");
-      SetPasswordHidden(false);
-    } else {
-      x!.setAttribute("type", "password");
-      SetPasswordHidden(true);
-    }
-  };
   const handleSetPassword = (pass: string) => {
     if (!isValidPassword(pass)) {
       toast.error(
@@ -95,18 +92,18 @@ const LoginInforFormLayout: React.FC<loginInforFormLayoutProps> = ({
             </div>
             <div className="flex flex-row gap-3 w-16 items-start">
               <img
-                onClick={HideorshowPassword}
-                src="/eyepassword.svg"
+                onClick={togglePasswordVisibility}
+                src={iconSrc}
                 alt="Group1"
                 className="mt-2 w-5"
               />
               <div className="text-right text-lg text-[rgba(102,_102,_102,_0.8)]">
-                {PasswordHidden ? "Hide" : "Show"}
+                {passwordvisibletext}
               </div>
             </div>
           </div>
           <input
-            type="password"
+            type={isPasswordVisible ? "text" : "password"}
             id="passwordfield"
             onBlur={(e) => handleSetPassword(e.target.value)}
             className="text-[rgba(102,_102,_102,_0.6)] border-solid border-[rgba(102,_102,_102,_0.35)] flex flex-row w-full h-12 items-start pt-3 px-6 border rounded-lg"

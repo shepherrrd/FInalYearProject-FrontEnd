@@ -33,6 +33,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
+    "src/app/signin",
     "src/app/signin"
   ],
   "exclude": [

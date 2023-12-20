@@ -1,4 +1,5 @@
 import { FileData } from "@/types/Signuptypes";
+import { isValidEmail } from "@/utilities/utils";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -64,7 +65,13 @@ const SignupResearchCenterFormLayout: React.FC<
   const [researchProposal, setResearchProposal] =
     useState<FileData>(researchProposalProp);
   const [irbApproval, setIrbApproval] = useState<FileData>(irbApprovalProp);
-
+  const HandleSetEmail = (email: string) => {
+    if (!isValidEmail(email)) {
+      toast.error("Invalid email address");
+    } else {
+      setEmail(email);
+    }
+  };
   useEffect(() => {
     setTitleProp(title);
     setFirstNameProp(firstName);
@@ -213,7 +220,7 @@ const SignupResearchCenterFormLayout: React.FC<
             <input
               type="email"
               id="institutionalbasedemailaddressfield"
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => HandleSetEmail(e.target.value)}
               className="border-solid border-[rgba(102,_102,_102,_0.35)] w-full h-12 border rounded-lg"
             />
           </div>
