@@ -10,20 +10,28 @@ Clone the repository:
 
 ```sh
 git clone https://github.com/shpherrrd/FINALYEARFRONTEND.git
+```
 
 ### Navigate into the project directory
 
+```sh
 cd FINALYEARFRONTEND
+```
 
 ### Install the dependencies:
 
+```sh
 npm install
+```
 
 ### To start the development server:
 
+```sh
 npm run dev
+```
 
 ### TO create an optimized build :
 
+```sh
 npm run build
 ```
