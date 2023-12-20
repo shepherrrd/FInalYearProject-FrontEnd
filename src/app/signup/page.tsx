@@ -1,25 +1,32 @@
 "use client";
 
-import SignupAccountTypeLayout from "@/layouts/signup.accountype";
-import SignupUploadForm from "@/layouts/signup.hospitaluploadform";
-import LoginInforFormLayout from "@/layouts/signup.logininfo";
-import SignupResearchCenterFormLayout from "@/layouts/signup.researchcenterform";
-import { FileData, ResearchCenterSignupDetails } from "@/types/Signuptypes";
+import SignupAccountTypeLayout from "@/layouts/signup/signup.accountype";
+import SignupUploadForm from "@/layouts/signup/signup.hospitaluploadform";
+import LoginInforFormLayout from "@/layouts/signup/signup.logininfo";
+import SignupResearchCenterFormLayout from "@/layouts/signup/signup.researchcenterform";
+import {
+  submitResearchCenterSignupDetails,
+  submitHospitalSignupDetails,
+} from "@/services/signup.handler";
+import {
+  AccountType,
+  FileData,
+  HospitalSignupDetailsFormData,
+  ResearchCenterSignupDetailsFormData,
+} from "@/types/Signuptypes";
 import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import { Navigate, useNavigate } from "react-router-dom";
+import Router from "next/router";
 import {
   saveToLocalStorage,
   getFromLocalStorage,
 } from "@/utilities/localstorage";
 
 export default function SignUp() {
-  const navigate = useNavigate();
   const [step, setStep] = useState(1);
-  const [accountType, setAccountType] = useState("");
+  const [accountType, setAccountType] = useState<AccountType>(AccountType.None);
   const [location, setLocation] = useState("");
   const [name, setName] = useState("");
-  const [hospital, setHospital] = useState("");
   const [Hospitalemail, setHospitalEmail] = useState("");
   const [address, setAddress] = useState("");
   const [title, setTitle] = useState<string>("");
@@ -30,6 +37,16 @@ export default function SignUp() {
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [ResearchCenteremail, setResearchCenterEmail] = useState<string>("");
+  const [hospitalName, setHospitalName] = useState("");
+  const [websiteAddress, setWebsiteAddress] = useState("");
+  const [NafdacDocument, setNafdacDocument] = useState<FileData>({
+    file: null,
+    fileName: "",
+  });
+  const [cacDocument, setCacDocument] = useState<FileData>({
+    file: null,
+    fileName: "",
+  });
   const [passportPhoto, setPassportPhoto] = useState<FileData>({
     file: null,
     fileName: "",
@@ -44,8 +61,8 @@ export default function SignUp() {
     fileName: "",
   });
   const [ResearchCenterSignupDetails, setResearchCenterSignupDetails] =
-    useState<ResearchCenterSignupDetails>({
-      accountType: "",
+    useState<ResearchCenterSignupDetailsFormData>({
+      accountType: AccountType.ResearchCenter,
       location: "",
       title: "",
       firstName: "",
@@ -58,6 +75,20 @@ export default function SignUp() {
       researchProposal: { file: null, fileName: "" },
       irbApproval: { file: null, fileName: "" },
       password: "",
+      confirmPassword: "",
+    });
+
+  const [HospitalSignupDetails, setHospitalSignupDetails] =
+    useState<HospitalSignupDetailsFormData>({
+      accountType: AccountType.Hospital,
+      location: "",
+      hospitalName: "",
+      hospitalEmail: "",
+      websiteAddress: "",
+      cacDocument: { file: null, fileName: "" },
+      NafdacDocument: { file: null, fileName: "" },
+      password: "",
+      confirmPassword: "",
     });
   const handleSetStep = (value: number) => {
     console.log(step);
@@ -74,7 +105,7 @@ export default function SignUp() {
     const hasSymbols = /[!@#$%^&*(),.?":{}|<>]/.test(password);
     return hasMinimumLength && hasLetters && hasNumbers && hasSymbols;
   };
-  const HandleSubmit = () => {
+  const HandleSubmit = async () => {
     if (password !== confirmPassword) {
       toast.error("Passwords do not match");
       return;
@@ -85,28 +116,62 @@ export default function SignUp() {
       );
       return;
     }
-    if (accountType === "research") {
-      setResearchCenterSignupDetails({
-        accountType: accountType,
-        location: location,
-        title: title,
-        firstName: firstName,
-        middleName: middleName,
-        lastName: lastName,
-        institution: institution,
-        email: ResearchCenteremail,
-        passportPhoto: passportPhoto,
-        degree: degree,
-        researchProposal: researchProposal,
-        irbApproval: irbApproval,
-        password: password,
-      });
-      saveToLocalStorage(
-        "ResearchCenterSignupDetails",
-        ResearchCenterSignupDetails
-      );
-      toast.success("Signup Successful");
-      navigate("/signin");
+    switch (accountType) {
+      case AccountType.ResearchCenter:
+        {
+          setResearchCenterSignupDetails({
+            accountType: accountType,
+            location: location,
+            title: title,
+            firstName: firstName,
+            middleName: middleName,
+            lastName: lastName,
+            institution: institution,
+            email: ResearchCenteremail,
+            passportPhoto: passportPhoto,
+            degree: degree,
+            researchProposal: researchProposal,
+            irbApproval: irbApproval,
+            password: password,
+            confirmPassword: confirmPassword,
+          });
+          saveToLocalStorage(
+            "ResearchCenterSignupDetails",
+            ResearchCenterSignupDetails
+          );
+          toast.success("Signup Successful");
+          var signup = await submitResearchCenterSignupDetails(
+            ResearchCenterSignupDetails
+          );
+          if (signup.status) {
+            toast.success(signup.message);
+            Router.push("/signin");
+          } else {
+            toast.error(signup.message);
+          }
+        }
+        break;
+      case AccountType.Hospital: {
+        setHospitalSignupDetails({
+          accountType: accountType,
+          location: location,
+          hospitalName: name,
+          hospitalEmail: Hospitalemail,
+          websiteAddress: address,
+          cacDocument: cacDocument,
+          NafdacDocument: NafdacDocument,
+          password: password,
+          confirmPassword: confirmPassword,
+        });
+        saveToLocalStorage("HospitalSignupDetails", HospitalSignupDetails);
+        const signup = await submitHospitalSignupDetails(HospitalSignupDetails);
+        if (signup.status) {
+          toast.success(signup.message);
+          Router.push("/signin");
+        } else {
+          toast.error(signup.message);
+        }
+      }
     }
   };
   return (
@@ -218,17 +283,19 @@ export default function SignUp() {
                 />
                 <SignupUploadForm
                   onNext={nextStep}
-                  name={name}
-                  setName={setName}
-                  hospital={hospital}
-                  setHospital={setHospital}
-                  email={Hospitalemail}
-                  setEmail={setHospitalEmail}
-                  address={address}
-                  setAddress={setAddress}
+                  hospitalName={name}
+                  setHospitalName={setName}
+                  setHospitalEmail={setHospitalEmail}
+                  hospitalEmail={Hospitalemail}
+                  websiteAddress={address}
+                  setWebsiteAddress={setAddress}
+                  nafdacDocument={NafdacDocument}
+                  setNafdacDocument={setNafdacDocument}
+                  cacDocument={cacDocument}
+                  setCacDocument={setCacDocument}
                   style={{
                     display:
-                      step === 2 && accountType === "hospital"
+                      step === 2 && accountType === AccountType.Hospital
                         ? "block"
                         : "none",
                   }}
@@ -257,7 +324,7 @@ export default function SignUp() {
                   setIrbApproval={setIrbApproval}
                   style={{
                     display:
-                      step === 2 && accountType === "research"
+                      step === 2 && accountType === AccountType.ResearchCenter
                         ? "block"
                         : "none",
                   }}

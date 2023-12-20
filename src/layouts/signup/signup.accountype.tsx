@@ -1,9 +1,10 @@
 "use client";
+import { AccountType } from "@/types/Signuptypes";
 import React, { useEffect, useState } from "react";
 type SignupAccountTypeLayoutProps = {
   onNext: () => void;
-  accountType: string;
-  setAccountType: (value: string) => void;
+  accountType: AccountType;
+  setAccountType: (value: AccountType) => void;
   location: string;
   setLocation: (value: string) => void;
   style?: React.CSSProperties;
@@ -20,8 +21,11 @@ const SignupAccountTypeLayout: React.FC<SignupAccountTypeLayoutProps> = ({
   const [location, setLocation] = useState(locationProp);
 
   const handleSetAccountType = (value: string) => {
-    console.log(value);
-    setAccountType(value);
+    if (value === "hospital") {
+      setAccountType(AccountType.Hospital);
+    } else if (value === "research") {
+      setAccountType(AccountType.ResearchCenter);
+    }
   };
   useEffect(() => {
     setAccountTypeProp(accountType);

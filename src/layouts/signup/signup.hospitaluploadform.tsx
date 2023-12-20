@@ -6,40 +6,38 @@ import "react-toastify/dist/ReactToastify.css";
 
 type SignupAccountTypeLayoutProps = {
   onNext: () => void;
-  name: string;
-  setName: (value: string) => void;
-  hospital: string;
-  setHospital: (value: string) => void;
-  email: string;
-  setEmail: (value: string) => void;
-  address: string;
-  setAddress: (value: string) => void;
+  hospitalName: string;
+  setHospitalName: (value: string) => void;
+  hospitalEmail: string;
+  setHospitalEmail: (value: string) => void;
+  websiteAddress: string;
+  setWebsiteAddress: (value: string) => void;
+  nafdacDocument: FileData;
+  setNafdacDocument: (value: FileData) => void;
+  cacDocument: FileData;
+  setCacDocument: (value: FileData) => void;
   style?: React.CSSProperties;
 };
 
 const SignupUploadForm: React.FC<SignupAccountTypeLayoutProps> = ({
   onNext,
-  name,
-  setName,
-  hospital,
-  setHospital,
-  email,
-  setEmail,
-  address,
-  setAddress,
   style,
+  hospitalName: hospitalNameProp,
+  setHospitalName: setHospitalNameProp,
+  hospitalEmail: hospitalEmailProp,
+  setHospitalEmail: setHospitalEmailProp,
+  websiteAddress: websiteAddressProp,
+  setWebsiteAddress: setWebsiteAddressProp,
+  nafdacDocument: nafdacDocumentProp,
+  setNafdacDocument: setNafdacDocumentProp,
+  cacDocument: cacDocumentProp,
+  setCacDocument: setCacDocumentProp,
 }) => {
-  const [hospitalName, setHospitalName] = useState("");
-  const [hospitalEmail, setHospitalEmail] = useState("");
-  const [websiteAddress, setWebsiteAddress] = useState("");
-  const [NafdacDocument, setNafdacDocument] = useState<FileData>({
-    file: null,
-    fileName: "",
-  });
-  const [cacDocument, setCacDocument] = useState<FileData>({
-    file: null,
-    fileName: "",
-  });
+  const [hospitalName, setHospitalName] = useState(hospitalNameProp);
+  const [hospitalEmail, setHospitalEmail] = useState(hospitalEmailProp);
+  const [websiteAddress, setWebsiteAddress] = useState(websiteAddressProp);
+  const [nafdacDocument, setNafdacDocument] = useState(nafdacDocumentProp);
+  const [cacDocument, setCacDocument] = useState(cacDocumentProp);
 
   const HandleSetCacDocument = (event: any) => {
     const file = event.target.files[0];
@@ -67,10 +65,18 @@ const SignupUploadForm: React.FC<SignupAccountTypeLayoutProps> = ({
   };
 
   useEffect(() => {
-    setName(hospitalName);
-    setEmail(hospitalEmail);
-    setAddress(websiteAddress);
-  });
+    setHospitalName(hospitalName);
+    setHospitalEmail(hospitalEmail);
+    setWebsiteAddress(websiteAddress);
+    setNafdacDocument(nafdacDocument);
+    setCacDocument(cacDocument);
+  }, [
+    hospitalName,
+    hospitalEmail,
+    websiteAddress,
+    nafdacDocument,
+    cacDocument,
+  ]);
 
   const handleFileChange =
     (setFileData: React.Dispatch<React.SetStateAction<FileData>>) =>
@@ -205,7 +211,7 @@ const SignupUploadForm: React.FC<SignupAccountTypeLayoutProps> = ({
                     Upload File
                   </label>
                   <div className="text-sm leading-[22px] mt-3">
-                    {NafdacDocument.fileName}
+                    {nafdacDocument.fileName}
                   </div>
                 </div>
               </div>
@@ -251,7 +257,7 @@ const SignupUploadForm: React.FC<SignupAccountTypeLayoutProps> = ({
                   !hospitalName ||
                   !hospitalEmail ||
                   !websiteAddress ||
-                  !NafdacDocument.file ||
+                  !nafdacDocument.file ||
                   !cacDocument.file
                 }
                 onClick={onNext}
@@ -259,7 +265,7 @@ const SignupUploadForm: React.FC<SignupAccountTypeLayoutProps> = ({
                   hospitalName &&
                   hospitalEmail &&
                   websiteAddress &&
-                  NafdacDocument.file &&
+                  nafdacDocument.file &&
                   cacDocument.file
                     ? "opacity-100 text-red-900"
                     : "opacity-25 border-[rgba(102,102,102,0.35)]"
