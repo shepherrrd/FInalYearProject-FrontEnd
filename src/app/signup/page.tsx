@@ -185,6 +185,12 @@ export default function SignUp() {
           navigateToSignin();
         } else {
           toast.error(signup.message);
+          console.log(signup.erroData);
+          if (signup.erroData !== undefined || signup.erroData !== null) {
+            signup.erroData?.forEach((element: string) => {
+              toast.error(element);
+            });
+          }
         }
       }
     }

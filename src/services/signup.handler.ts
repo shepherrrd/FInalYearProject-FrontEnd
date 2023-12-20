@@ -44,12 +44,14 @@ export async function submitResearchCenterSignupDetails(
         return {
           status: false,
           message: "Submission failed due to invalid data.",
+          erroData: error.response.data.message,
         };
       }
-
+      console.log(`respone is ${error}`);
       return {
         status: false,
         message: error.response.data.message,
+        erroData: error.response.data.errors,
       };
     } else {
       // Handle unknown errors
@@ -83,12 +85,6 @@ export async function submitHospitalSignupDetails(
     const response = await axios.post(API.HOSPITAL_SIGNUP, form);
     if (response.status === 200) {
       return { status: true, message: "Successfully submitted!" };
-    } else if (response.status === 400) {
-      console.log(response.data);
-      return {
-        status: false,
-        message: response.data.message,
-      };
     } else {
       return { status: false, message: response.data.message };
     }
@@ -99,13 +95,15 @@ export async function submitHospitalSignupDetails(
       if (error.response.status === 400) {
         return {
           status: false,
-          message: error.response.data.message || "Something went wrong.",
+          message: error.response.data.message,
+          erroData: error.response.data.errors,
         };
       }
 
       return {
         status: false,
-        message: error.response.data.message || "Something went wrong.",
+        message: error.response.data.message,
+        erroData: error.response.data.errors,
       };
     } else {
       // Handle unknown errors

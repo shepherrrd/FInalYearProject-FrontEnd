@@ -1,3 +1,5 @@
+import { List } from "postcss/lib/list";
+
 export enum AccountType {
   Hospital = 1,
   ResearchCenter = 2,
@@ -45,4 +47,5 @@ export type HospitalSignupDetailsFormData = {
 export type SignupApiResponse = {
   status: boolean;
   message: string;
+  erroData?: string[];
 };
