@@ -30,8 +30,14 @@ npm install
 npm run dev
 ```
 
-### TO create an optimized build :
+### To create an optimized build :
 
 ```sh
 npm run build
+```
+
+### To start the application in production mode:
+
+```sh
+npm start
 ```
