@@ -26,9 +26,7 @@ export default function SignUp() {
   const [step, setStep] = useState(1);
   const [accountType, setAccountType] = useState<AccountType>(AccountType.None);
   const [location, setLocation] = useState("");
-  const [name, setName] = useState("");
   const [Hospitalemail, setHospitalEmail] = useState("");
-  const [address, setAddress] = useState("");
   const [title, setTitle] = useState<string>("");
   const [firstName, setFirstName] = useState<string>("");
   const [middleName, setMiddleName] = useState<string>("");
@@ -155,9 +153,9 @@ export default function SignUp() {
         setHospitalSignupDetails({
           accountType: accountType,
           location: location,
-          hospitalName: name,
+          hospitalName: hospitalName,
           hospitalEmail: Hospitalemail,
-          websiteAddress: address,
+          websiteAddress: websiteAddress,
           cacDocument: cacDocument,
           NafdacDocument: NafdacDocument,
           password: password,
@@ -283,12 +281,12 @@ export default function SignUp() {
                 />
                 <SignupUploadForm
                   onNext={nextStep}
-                  hospitalName={name}
-                  setHospitalName={setName}
+                  hospitalName={hospitalName}
+                  setHospitalName={setHospitalName}
                   setHospitalEmail={setHospitalEmail}
                   hospitalEmail={Hospitalemail}
-                  websiteAddress={address}
-                  setWebsiteAddress={setAddress}
+                  websiteAddress={websiteAddress}
+                  setWebsiteAddress={setWebsiteAddress}
                   nafdacDocument={NafdacDocument}
                   setNafdacDocument={setNafdacDocument}
                   cacDocument={cacDocument}
