@@ -70,20 +70,20 @@ export default function SignUp() {
   };
   const [ResearchCenterSignupDetails, setResearchCenterSignupDetails] =
     useState<ResearchCenterSignupDetailsFormData>({
-      accountType: AccountType.ResearchCenter,
-      location: location,
-      title: title,
-      firstName: firstName,
-      middleName: middleName,
-      lastName: lastName,
-      institution: institution,
-      email: ResearchCenteremail,
-      passportPhoto: passportPhoto,
-      degree: degree,
-      researchProposal: researchProposal,
-      irbApproval: irbApproval,
-      password: password,
-      confirmPassword: confirmPassword,
+      AccountType: AccountType.ResearchCenter,
+      Location: location,
+      Title: title,
+      FirstName: firstName,
+      MiddleName: middleName,
+      LastName: lastName,
+      Institution: institution,
+      Email: ResearchCenteremail,
+      PassportPhoto: passportPhoto,
+      Degree: degree,
+      ResearchProposal: researchProposal,
+      IrbApproval: irbApproval,
+      Password: password,
+      ConfirmPassword: confirmPassword,
     });
 
   const [HospitalSignupDetails, setHospitalSignupDetails] =
@@ -113,6 +113,7 @@ export default function SignUp() {
       hospitalName
     );
   };
+
   const validpassword = (password: string) => {
     const hasMinimumLength = password.length >= 8;
     const hasLetters = /[a-zA-Z]/.test(password);
@@ -131,43 +132,44 @@ export default function SignUp() {
       );
       return;
     }
+
+    let ResearchSignupData: ResearchCenterSignupDetailsFormData;
+    let HospitalSignupData: HospitalSignupDetailsFormData;
     switch (accountType) {
       case AccountType.ResearchCenter:
-        {
-          setResearchCenterSignupDetails({
-            accountType: accountType,
-            location: location,
-            title: title,
-            firstName: firstName,
-            middleName: middleName,
-            lastName: lastName,
-            institution: institution,
-            email: ResearchCenteremail,
-            passportPhoto: passportPhoto,
-            degree: degree,
-            researchProposal: researchProposal,
-            irbApproval: irbApproval,
-            password: password,
-            confirmPassword: confirmPassword,
-          });
-          saveToLocalStorage(
-            "ResearchCenterSignupDetails",
-            ResearchCenterSignupDetails
-          );
-          toast.success("Signup Successful");
-          var signup = await submitResearchCenterSignupDetails(
-            ResearchCenterSignupDetails
-          );
-          if (signup.status) {
-            toast.success(signup.message);
-            navigateToSignin();
-          } else {
-            toast.error(signup.message);
-          }
+        ResearchSignupData = {
+          AccountType: accountType,
+          Location: location,
+          Title: title,
+          FirstName: firstName,
+          MiddleName: middleName,
+          LastName: lastName,
+          Institution: institution,
+          Email: ResearchCenteremail,
+          PassportPhoto: passportPhoto,
+          Degree: degree,
+          ResearchProposal: researchProposal,
+          IrbApproval: irbApproval,
+          Password: password,
+          ConfirmPassword: confirmPassword,
+        };
+        // save to local storage
+        saveToLocalStorage("ResearchCenterSignupDetails", ResearchSignupData);
+        // make API call
+        toast.success("Signup Successful");
+        var signup = await submitResearchCenterSignupDetails(
+          ResearchSignupData
+        );
+        if (signup.status) {
+          toast.success(signup.message);
+          navigateToSignin();
+        } else {
+          toast.error(signup.message);
         }
+        // handle the response
         break;
-      case AccountType.Hospital: {
-        setHospitalSignupDetails({
+      case AccountType.Hospital:
+        HospitalSignupData = {
           accountType: accountType,
           Location: location,
           HospitalName: hospitalName,
@@ -177,22 +179,29 @@ export default function SignUp() {
           NafdacDocument: NafdacDocument,
           Password: password,
           ConfirmPassword: confirmPassword,
-        });
-
-        const signup = await submitHospitalSignupDetails(HospitalSignupDetails);
-        if (signup.status) {
-          toast.success(signup.message);
+        };
+        // make API call
+        const hospitalSignup = await submitHospitalSignupDetails(
+          HospitalSignupData
+        );
+        if (hospitalSignup.status) {
+          toast.success(hospitalSignup.message);
           navigateToSignin();
         } else {
-          toast.error(signup.message);
-          console.log(signup.erroData);
-          if (signup.erroData !== undefined || signup.erroData !== null) {
-            signup.erroData?.forEach((element: string) => {
+          toast.error(hospitalSignup.message);
+          console.log(hospitalSignup.erroData);
+          if (
+            hospitalSignup.erroData !== undefined ||
+            hospitalSignup.erroData !== null
+          ) {
+            hospitalSignup.erroData?.forEach((element: string) => {
               toast.error(element);
             });
           }
         }
-      }
+        // handle the response
+        break;
+      // ...other cases...
     }
   };
   return (

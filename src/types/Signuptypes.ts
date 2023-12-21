@@ -12,24 +12,24 @@ export type FileData = {
 
 export type ResearchCenterSignupDetailsFormData = {
   // Fields from SignupAccountTypeLayoutProps
-  accountType: AccountType;
-  location: string;
+  AccountType: AccountType;
+  Location: string;
 
   // Fields from SignupResearchCenterFormLayoutProps
-  title: string;
-  firstName: string;
-  middleName: string;
-  lastName: string;
-  institution: string;
-  email: string;
-  passportPhoto: FileData;
-  degree: FileData;
-  researchProposal: FileData;
-  irbApproval: FileData;
+  Title: string;
+  FirstName: string;
+  MiddleName: string;
+  LastName: string;
+  Institution: string;
+  Email: string;
+  PassportPhoto: FileData;
+  Degree: FileData;
+  ResearchProposal: FileData;
+  IrbApproval: FileData;
 
   // Additional password field
-  password: string;
-  confirmPassword: string;
+  Password: string;
+  ConfirmPassword: string;
 };
 
 export type HospitalSignupDetailsFormData = {
