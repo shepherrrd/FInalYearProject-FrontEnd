@@ -164,7 +164,7 @@ const SignupUploadForm: React.FC<SignupAccountTypeLayoutProps> = ({
                 </div>
                 <div id="Label4" className="text-[#666666]">
                   {""}
-                  CAC Document
+                  NafDac Document
                 </div>
               </div>
             </div>

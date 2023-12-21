@@ -241,7 +241,9 @@ export default function SignUp() {
               <div className="flex flex-row ml-12 gap-8 w-5/6 items-start">
                 <div
                   id="BG"
-                  className="text-center text-xs text-white bg-reddot bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row w-5 items-start pt-px px-2"
+                  className={`text-center text-xs text-white ${
+                    step == 1 ? "bg-reddot" : "bg-blackdot"
+                  } bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row w-5 items-start pt-px px-2`}
                 >
                   1
                 </div>
@@ -249,7 +251,9 @@ export default function SignUp() {
                   <div className="opacity-35 bg-[#333333] w-2/5 h-px" />
                   <div
                     id="BG1"
-                    className="text-center text-xs text-white bg-blackdot bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row w-5 items-start pt-px px-2"
+                    className={`text-center text-xs text-white ${
+                      step == 2 ? "bg-reddot" : "bg-blackdot"
+                    } bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row w-5 items-start pt-px px-2`}
                   >
                     2
                   </div>
@@ -257,7 +261,9 @@ export default function SignUp() {
                     <div className="opacity-35 bg-[#333333] w-5/6 h-px" />
                     <div
                       id="BG2"
-                      className="text-center text-xs text-white bg-blackdot bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row w-5 items-start pt-px px-2"
+                      className={`text-center text-xs text-white ${
+                        step == 3 ? "bg-reddot" : "bg-blackdot"
+                      } bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row w-5 items-start pt-px px-2`}
                     >
                       3
                     </div>

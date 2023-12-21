@@ -30,6 +30,7 @@ const LoginInforFormLayout: React.FC<loginInforFormLayoutProps> = ({
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [iconSrc, setIconSrc] = useState("/eyepassword.svg");
   const [passwordvisibletext, SetPasswordVisibleText] = useState("Show");
+  const [isChecked, setIsChecked] = useState(false);
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
     setIconSrc(isPasswordVisible ? "/eyepassword.svg" : "/eyeopen.svg");
@@ -144,7 +145,8 @@ const LoginInforFormLayout: React.FC<loginInforFormLayoutProps> = ({
           <div className="flex flex-row mt-3 gap-2 w-1/4 items-start">
             <input
               type="checkbox"
-              alt="CheckBox1"
+              checked={isChecked}
+              onChange={(e) => setIsChecked(e.target.checked)}
               id="CheckBox1"
               className="mt-1 w-4"
             />
@@ -161,10 +163,10 @@ const LoginInforFormLayout: React.FC<loginInforFormLayoutProps> = ({
         </div>
         <button
           id="Button1"
-          disabled={!password || !confirmPassword}
+          disabled={!password || !confirmPassword || !isChecked}
           onClick={OnSubmit}
           className={`text-center text-xl text-white bg-[#111111] flex flex-row justify-center pt-4 w-full h-16 cursor-pointer items-start rounded-[32px] ${
-            password && confirmPassword
+            password && confirmPassword && isChecked
               ? "opacity-100 text-red-900"
               : "opacity-25 border-[rgba(102,102,102,0.35)]"
           }`}
