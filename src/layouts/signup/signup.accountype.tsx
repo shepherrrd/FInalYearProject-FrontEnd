@@ -50,7 +50,6 @@ const SignupAccountTypeLayout: React.FC<SignupAccountTypeLayoutProps> = ({
           Account Type
         </div>
         <select
-          value={accountType.toString()}
           onChange={(e) => handleSetAccountType(e.target.value)}
           className="border-solid border-[rgba(102,_102,_102,_0.35)] flex flex-row justify-end w-full h-12 items-start pt-4 px-6 border rounded-lg"
         >
