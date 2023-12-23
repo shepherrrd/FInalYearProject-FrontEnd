@@ -20,7 +20,7 @@ const config: Config = {
     },
   },
   plugins: [
-    function ({ addUtilities, theme }) {
+    function ({ addUtilities, theme }: any) {
       const newUtilities = {
         "@keyframes spin": {
           from: { transform: "rotate(0deg)" },
