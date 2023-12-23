@@ -5,7 +5,7 @@ const API_URL = IsLive
 
 export const API = {
   HOSPITAL_SIGNUP: `${API_URL}/api/Registration/RegisterHospital`,
-  LOGIN: `${API_URL}/api/login`,
+  LOGIN: `${API_URL}/api/Auth/SignIn`,
   RESEARCH_CENTER_SIGNUP: `${API_URL}/api/Registration/RegisterResearchCenter`,
   GET_HOSPITALS: `${API_URL}/api/hospitals`,
   GET_RESEARCH_CENTERS: `${API_URL}/api/research-centers`,

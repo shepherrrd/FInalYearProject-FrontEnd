@@ -4,6 +4,8 @@ import SignupAccountTypeLayout from "@/layouts/signup/signup.accountype";
 import SignupUploadForm from "@/layouts/signup/signup.hospitaluploadform";
 import LoginInforFormLayout from "@/layouts/signup/signup.logininfo";
 import SignupResearchCenterFormLayout from "@/layouts/signup/signup.researchcenterform";
+import "react-toastify/dist/ReactToastify.css";
+
 import {
   submitResearchCenterSignupDetails,
   submitHospitalSignupDetails,
@@ -39,6 +41,7 @@ export default function SignUp() {
   const [ResearchCenteremail, setResearchCenterEmail] = useState<string>("");
   const [hospitalName, setHospitalName] = useState("");
   const [websiteAddress, setWebsiteAddress] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [NafdacDocument, setNafdacDocument] = useState<FileData>({
     file: null,
     fileName: "",
@@ -60,8 +63,6 @@ export default function SignUp() {
     file: null,
     fileName: "",
   });
-
-  console.log(NafdacDocument);
   const router = useRouter();
 
   const navigateToSignin = () => {
@@ -135,6 +136,8 @@ export default function SignUp() {
 
     let ResearchSignupData: ResearchCenterSignupDetailsFormData;
     let HospitalSignupData: HospitalSignupDetailsFormData;
+    setIsLoading(true);
+
     switch (accountType) {
       case AccountType.ResearchCenter:
         ResearchSignupData = {
@@ -153,18 +156,25 @@ export default function SignUp() {
           Password: password,
           ConfirmPassword: confirmPassword,
         };
-        // save to local storage
-        saveToLocalStorage("ResearchCenterSignupDetails", ResearchSignupData);
         // make API call
-        toast.success("Signup Successful");
-        var signup = await submitResearchCenterSignupDetails(
-          ResearchSignupData
-        );
-        if (signup.status) {
-          toast.success(signup.message);
-          navigateToSignin();
-        } else {
-          toast.error(signup.message);
+
+        try {
+          setIsLoading(true);
+          var signup = await submitResearchCenterSignupDetails(
+            ResearchSignupData
+          );
+          if (signup.status) {
+            toast.success(signup.message);
+            navigateToSignin();
+          } else {
+            toast.error(signup.message);
+          }
+        } catch (error) {
+          // Handle any errors that occur during the API request
+          toast.error("An error occurred while processing your request.");
+        } finally {
+          // This block runs regardless of the previous outcome
+          setIsLoading(false);
         }
         // handle the response
         break;
@@ -181,27 +191,33 @@ export default function SignUp() {
           ConfirmPassword: confirmPassword,
         };
         // make API call
-        const hospitalSignup = await submitHospitalSignupDetails(
-          HospitalSignupData
-        );
-        if (hospitalSignup.status) {
-          toast.success(hospitalSignup.message);
-          navigateToSignin();
-        } else {
-          toast.error(hospitalSignup.message);
-          console.log(hospitalSignup.erroData);
-          if (
-            hospitalSignup.erroData !== undefined ||
-            hospitalSignup.erroData !== null
-          ) {
-            hospitalSignup.erroData?.forEach((element: string) => {
-              toast.error(element);
-            });
+
+        try {
+          setIsLoading(true);
+          const hospitalSignup = await submitHospitalSignupDetails(
+            HospitalSignupData
+          );
+          if (hospitalSignup.status) {
+            toast.success(hospitalSignup.message);
+            navigateToSignin();
+          } else {
+            toast.error(hospitalSignup.message);
+            console.log(hospitalSignup.erroData);
+            if (
+              hospitalSignup.erroData !== undefined ||
+              hospitalSignup.erroData !== null
+            ) {
+              hospitalSignup.erroData?.forEach((element: string) => {
+                toast.error(element);
+              });
+            }
           }
+        } catch (error) {
+          toast.error("An error occurred while processing your request.");
+        } finally {
+          setIsLoading(false);
         }
-        // handle the response
         break;
-      // ...other cases...
     }
   };
   return (
@@ -244,8 +260,9 @@ export default function SignUp() {
                   className={`text-center text-xs text-white ${
                     step == 1 ? "bg-reddot" : "bg-blackdot"
                   } bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row w-5 items-start pt-px px-2`}
+                  onClick={() => setIsLoading(true)}
                 >
-                  1
+                  1 {isLoading}
                 </div>
                 <div className="flex flex-row justify-between w-full items-start">
                   <div className="opacity-35 bg-[#333333] w-2/5 h-px" />
@@ -384,6 +401,8 @@ export default function SignUp() {
                 SetPassword={setPassword}
                 confirmPassword={confirmPassword}
                 SetConfirmPassword={setConfirmPassword}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
                 style={{ display: step === 3 ? "block" : "none" }}
               />
               {step !== 3 && (
@@ -396,7 +415,7 @@ export default function SignUp() {
                     3
                   </div>
                   <div className="text-center text-2xl text-[#333333]">
-                    Login info
+                    Login info {isLoading ? "..." : ""}
                   </div>
                 </div>
               )}

@@ -1,11 +1,12 @@
 "use client";
 import { handleLogin } from "@/services/auth.handler";
 import { LoginRequest } from "@/types/auth.types";
-import { isValidEmail } from "@/utilities/utils";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+
+import "react-toastify/dist/ReactToastify.css";
 
 export default function SignIn() {
   const router = useRouter();
@@ -14,25 +15,35 @@ export default function SignIn() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [iconSrc, setIconSrc] = useState("/eyepassword.svg");
   const [passwordvisibletext, SetPasswordVisibleText] = useState("Show");
+  const [isLoading, setIsLoading] = useState(false);
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
     setIconSrc(isPasswordVisible ? "/eyeopen.svg" : "/eyepassword.svg");
     SetPasswordVisibleText(isPasswordVisible ? "Show" : "Hide");
   };
-  const HandleSetEmail = (email: string) => {
-    if (!isValidEmail(email)) {
-      toast.error("Invalid email address");
-    } else {
-      setEmail(email);
-    }
-  };
 
-  const HandleSubmit = async (request: LoginRequest) => {
-    const login = await handleLogin(request);
-    if (login) {
-      toast.success("Login successful");
-    } else {
-      toast.error("Login failed");
+  const HandleSetEmail = (email: string) => {
+    setEmail(email);
+  };
+  const HandleSubmit = async () => {
+    var request: LoginRequest = {
+      email: email,
+      password: password,
+    };
+    setIsLoading(true);
+    try {
+      const login = await handleLogin(request);
+      if (login.status) {
+        toast.success("Login successful");
+        console.log(login);
+      } else {
+        toast.error(login.message);
+        console.log(login);
+      }
+    } catch (error) {
+      toast.error("An Error Occured");
+    } finally {
+      setIsLoading(false);
     }
   };
   return (
@@ -67,7 +78,7 @@ export default function SignIn() {
                     <input
                       type="email"
                       id="TextField"
-                      onBlur={(e) => setEmail(e.target.value)}
+                      onChange={(e) => HandleSetEmail(e.target.value)}
                       className="border-solid border-[rgba(102,_102,_102,_0.35)] w-full h-12 border rounded-lg"
                     />
                   </div>
@@ -95,35 +106,21 @@ export default function SignIn() {
                     <input
                       type={isPasswordVisible ? "text" : "password"}
                       id="TextField1"
-                      onBlur={(e) => setPassword(e.target.value)}
+                      onChange={(e) => setPassword(e.target.value)}
                       className="border-solid border-[rgba(102,_102,_102,_0.35)] w-full h-12 border rounded-lg"
                     />
                   </div>
                   <div className="flex flex-col gap-4 w-full font-['Poppins'] items-start">
                     <button
                       id="Button1"
-                      disabled={!password || !email}
-                      className={`text-center opacity-25 text-xl font-medium text-white bg-[#111111] flex flex-row justify-center pt-4 w-full h-16 cursor-pointer items-start rounded-[40px]"${
-                        password && email
-                          ? "opacity-100 text-red-900"
-                          : "opacity-25 border-[rgba(102,102,102,0.35)]"
-                      }`}
+                      className={`text-center text-xl font-medium text-white bg-[#111111] flex flex-row justify-center pt-4 w-full h-16 cursor-pointer items-start rounded-[40px] ${
+                        email && password ? "opacity-100" : "opacity-25"
+                      } ${isLoading ? "cursor-not-allowed" : "cursor-pointer"}`}
+                      onClick={HandleSubmit}
+                      disabled={!email || !password}
                     >
-                      Log in
+                      {isLoading ? <div className="spinner"></div> : "Finish"}
                     </button>
-                    <div className="text-[#333333]  font-['Poppins'] w-full">
-                      By continuing, you agree to the{" "}
-                      <span className="underline text-[#111111] ">
-                        Terms of use
-                      </span>
-                      <span className="text-[#666666]"> </span>
-                      <div>and</div>
-                      <span className="text-[#666666]"> </span>
-                      <span className="underline text-[#111111]">
-                        Privacy Policy.
-                      </span>
-                      <span className=" text-[#666666]"> </span>
-                    </div>
                   </div>
                 </div>
               </div>

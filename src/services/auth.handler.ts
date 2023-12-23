@@ -1,5 +1,6 @@
 import { API } from "@/constants/api.constants";
-import { LoginRequest, LoginResponse } from "@/types/auth.types";
+import { LoginRequest, LoginResponse, UserData } from "@/types/auth.types";
+import { saveToLocalStorage } from "@/utilities/localstorage";
 import axios, { AxiosResponse } from "axios";
 
 export async function handleLogin(
@@ -9,24 +10,37 @@ export async function handleLogin(
     const response: AxiosResponse = await axios.post(API.LOGIN, request);
 
     if (response.status === 200) {
-      return { status: true, message: "Success" };
+      saveToLocalStorage("user", response.data.data as UserData);
+      return { status: true, message: "Success", data: response.data.data };
     } else {
       // If the response status is not 200, but the request was successful
-      return { status: false, message: response.data.message || "Failed" };
+      return {
+        status: false,
+        message: response.data.message,
+        data: response.data.data,
+      };
     }
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       // Handle 400 or other known error status codes here
       if (error.response.status === 400) {
-        return { status: false, message: "Failed - Invalid credentials" };
+        return {
+          status: false,
+          message: error.response.data.message,
+          data: error.response.data.data,
+        };
       }
       return {
         status: false,
-        message: error.response.data.message || "Something went wrong",
+        message: error.response.data.message,
+        data: error.response.data.data,
       };
     } else {
       // Handle unknown errors
-      return { status: false, message: "An unexpected error occurred" };
+      return {
+        status: false,
+        message: "An unexpected error occurred",
+      };
     }
   }
 }

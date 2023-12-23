@@ -9,6 +9,8 @@ type loginInforFormLayoutProps = {
   SetPassword: (value: string) => void;
   confirmPassword: string;
   SetConfirmPassword: (value: string) => void;
+  isLoading: boolean;
+  setIsLoading: (value: boolean) => void;
 };
 
 const LoginInforFormLayout: React.FC<loginInforFormLayoutProps> = ({
@@ -18,6 +20,8 @@ const LoginInforFormLayout: React.FC<loginInforFormLayoutProps> = ({
   SetPassword: SetPasswordProp,
   confirmPassword: confirmPasswordProp,
   SetConfirmPassword: SetConfirmPasswordProp,
+  isLoading: isLoadingProp,
+  setIsLoading: setIsLoadingProp,
 }) => {
   function isValidPassword(password: string): boolean {
     const hasMinimumLength = password.length >= 8;
@@ -31,6 +35,7 @@ const LoginInforFormLayout: React.FC<loginInforFormLayoutProps> = ({
   const [iconSrc, setIconSrc] = useState("/eyepassword.svg");
   const [passwordvisibletext, SetPasswordVisibleText] = useState("Show");
   const [isChecked, setIsChecked] = useState(false);
+  const [isLoading, setIsLoading] = useState(isLoadingProp);
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
     setIconSrc(isPasswordVisible ? "/eyepassword.svg" : "/eyeopen.svg");
@@ -59,7 +64,9 @@ const LoginInforFormLayout: React.FC<loginInforFormLayoutProps> = ({
   useEffect(() => {
     SetPasswordProp(password);
     SetConfirmPasswordProp(confirmPassword);
-  });
+    setIsLoadingProp(isLoading);
+    setIsLoading(isLoading);
+  }, [password, confirmPassword, isLoading]);
   return (
     <div
       className="bg-white flex flex-col justify-between gap-8 w-full font-['Poppins'] items-start p-6 rounded-[24px]"
@@ -163,15 +170,15 @@ const LoginInforFormLayout: React.FC<loginInforFormLayoutProps> = ({
         </div>
         <button
           id="Button1"
-          disabled={!password || !confirmPassword || !isChecked}
+          disabled={!password || !confirmPassword || !isChecked || isLoading}
           onClick={OnSubmit}
           className={`text-center text-xl text-white bg-[#111111] flex flex-row justify-center pt-4 w-full h-16 cursor-pointer items-start rounded-[32px] ${
-            password && confirmPassword && isChecked
+            password && confirmPassword && isChecked && !isLoading
               ? "opacity-100 text-red-900"
               : "opacity-25 border-[rgba(102,102,102,0.35)]"
-          }`}
+          } ${isLoading ? "cursor-not-allowed" : "cursor-pointer"}`}
         >
-          Finish
+          {isLoading ? <div className="spinner"></div> : "Finish"}
         </button>
       </div>
     </div>
