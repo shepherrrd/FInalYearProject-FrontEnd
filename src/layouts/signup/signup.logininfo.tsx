@@ -66,7 +66,14 @@ const LoginInforFormLayout: React.FC<loginInforFormLayoutProps> = ({
     SetConfirmPasswordProp(confirmPassword);
     setIsLoadingProp(isLoading);
     setIsLoading(isLoading);
-  }, [password, confirmPassword, isLoading]);
+  }, [
+    password,
+    confirmPassword,
+    isLoading,
+    SetPasswordProp,
+    SetConfirmPasswordProp,
+    setIsLoadingProp,
+  ]);
   return (
     <div
       className="bg-white flex flex-col justify-between gap-8 w-full font-['Poppins'] items-start p-6 rounded-[24px]"
