@@ -24,14 +24,7 @@
     ],
     "paths": {
       "@/*": [
-        "./src/*",
-        "./src/layouts/*",
-        "./src/services/*",
-        "./src/types/*",
-        "./src/utils/*",
-        "./src/app/signin/*",
-        "./src/app/signup/*",
-        "./src/constants/*",
+        "./src/*"
       ]
     }
   },
@@ -40,8 +33,12 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/app/signin",
-    "src/app/signin"
+    "src/app/signin/*tsx",
+    "src/app/signup/*tsx",
+    "src/layouts/**/*.tsx",
+    "src/services/*.ts",
+    "src/utilities/*.ts",
+    "src/types/*.ts",
   ],
   "exclude": [
     "node_modules"
