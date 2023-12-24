@@ -29,6 +29,9 @@
         "./src/services/*",
         "./src/types/*",
         "./src/utils/*",
+        "./src/app/signin/*",
+        "./src/app/signup/*",
+        "./src/constants/*",
       ]
     }
   },
