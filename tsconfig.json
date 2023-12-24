@@ -24,7 +24,11 @@
     ],
     "paths": {
       "@/*": [
-        "./src/*"
+        "./src/*",
+        "./src/layouts/*",
+        "./src/services/*",
+        "./src/types/*",
+        "./src/utils/*",
       ]
     }
   },
