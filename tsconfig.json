@@ -25,7 +25,13 @@
     "paths": {
       "@/*": [
         "./src/*",
-        "./src/**/*"
+        "./src/app/signin/*",
+        "./src/app/signup/*",
+        "./src/layouts/signin/*",
+        "./src/layouts/signup/*",
+        "./src/services/*",
+        "./src/utilities/*",
+        "./src/types/*",
       ]
     }
   },
