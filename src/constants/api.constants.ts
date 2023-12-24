@@ -1,6 +1,6 @@
-const IsLive = false;
+const IsLive = true;
 const API_URL = IsLive
-  ? "https://api.covidresources.in"
+  ? "https://finalyearproject-api.onrender.com/"
   : "https://localhost:7028";
 
 export const API = {
