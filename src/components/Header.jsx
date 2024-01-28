@@ -1,12 +1,16 @@
-import React from 'react';
+import React from 'react'
 
-const Header = () => {
+const Header = ({ children }) => {
   return (
     <div className='bg-white absolute h-16 w-full flex justify-between'>
-        <p>Header Start</p>
-        <p>Header End</p>
+       {children}
     </div>
-  );
+  )
 }
 
-export default Header;
+export function HeaderName({ text }) {
+  return (
+    <h2 className='ml-2 mt-3 text-2xl'>{text}</h2>
+  );
+}
+export default Header

@@ -1,4 +1,4 @@
-import HospitalDashboard from "@/layouts/SettingHospital/hospital.dashboard";
+import HospitalDashboard from "@/layouts/uploadHospital/hospital.dashboard";
 
 export default function Dashboard() {
   return (

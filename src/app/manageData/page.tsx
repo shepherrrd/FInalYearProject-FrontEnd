@@ -1,4 +1,4 @@
-import HospitalDashboard from "@/layouts/dashboard/hospital.dashboard";
+import HospitalDashboard from "@/layouts/managedataHospital/hospital.dashboard";
 
 export default function Dashboard() {
   return (
