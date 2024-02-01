@@ -10,7 +10,7 @@ const Header = ({ children }) => {
 
 export function HeaderName({ text }) {
   return (
-    <h2 className='ml-2 mt-3 text-2xl'>{text}</h2>
+    <h2 className='ml-2 mt-3 text-2xl text-white'>{text}</h2>
   );
 }
 export default Header

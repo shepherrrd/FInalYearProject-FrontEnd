@@ -1,8 +1,7 @@
 "use client";
 import SideNavbar, { SidebarItem } from "@/components/SideNavbar"
 import Header, { HeaderName } from "@/components/Header"
-import LeftColumn from "@/components/LeftColumn"
-import RightColumn from "@/components/RightColumn"
+import OneColumn from "@/components/Onecolumn"
 import {
   UploadCloud,
   CopyCheck,
@@ -27,8 +26,7 @@ export default function HospitalDashboard(){
         <Header>
           <HeaderName text="Manage Data"/>
         </Header>
-        <LeftColumn/>
-        <RightColumn/>
+        <OneColumn/>
       </div>
       </div>
 

@@ -1,10 +1,10 @@
 import React from 'react'
-
+import Sidestat from "@/components/sidestat"
 const RightColumn = () => {
   return (
-    <div className='md:mt-16 flex justify-between md:w-[35%] bg-gray-400 min-h-[60%]'>
-        <p>Col-2 Start</p>
-        <p>Col-2 End</p>
+    <div className='md:mt-16 flex flex-col md:w-[25%] bg-[#F8F8F8] min-h-[60%]'>
+        <Sidestat />
+
     </div>
   )
 }
