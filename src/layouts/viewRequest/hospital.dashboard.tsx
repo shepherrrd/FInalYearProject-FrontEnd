@@ -1,7 +1,8 @@
 "use client";
 import SideNavbar, { SidebarItem } from "@/components/SideNavbar"
 import Header, { HeaderName } from "@/components/Header"
-import OneColumn from "@/components/upload/Onecolumn"
+import LeftColumn from "@/components/viewrequest/LeftColumn"
+import RightColumn from "@/components/viewrequest/RightColumn"
 import {
   UploadCloud,
   CopyCheck,
@@ -16,8 +17,8 @@ export default function HospitalDashboard(){
     <div className="flex">
       <SideNavbar>
         <SidebarItem  icon={<LayoutDashboard size={20} />} text="Dashboard" active={undefined} alert={undefined} />
-        <SidebarItem  icon={<UploadCloud size={20} />} text="Upload" active alert={undefined} />
-        <SidebarItem  icon={<CopyCheck size={20} />} text="Requests" alert active={undefined} />
+        <SidebarItem  icon={<UploadCloud size={20} />} text="Upload" active={undefined} alert={undefined} />
+        <SidebarItem  icon={<CopyCheck size={20} />} text="Requests" alert={undefined} active />
         <SidebarItem  icon={<Layers size={20} />} text="Manage Data" active={undefined} alert={undefined} />
         <hr className="my-3"/>
         <SidebarItem icon={<Settings size={20} />} text="Settings" active={undefined} alert={undefined}/>
@@ -26,7 +27,9 @@ export default function HospitalDashboard(){
         <Header>
           <HeaderName text="Manage Data"/>
         </Header>
-        <OneColumn/>
+        <LeftColumn/>
+        <RightColumn/>
+
       </div>
       </div>
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import Requestpreview from "@/components/Requestpreview"
+import Requestpreview from "@/components/dashboard/Requestpreview"
 
 const LeftColumn = () => {
   return( 

@@ -5,7 +5,8 @@ import { ChevronFirst, MoreVertical, ChevronLast } from 'lucide-react';
 const SidebarContext = createContext();
 
 const SideNavbar = ({ children }) => {
-  const [expanded, setExpanded] = useState(true);
+  // Change the initial state to false to start with the sidebar collapsed
+  const [expanded, setExpanded] = useState(false);
 
   return (
     <aside className='h-screen'>

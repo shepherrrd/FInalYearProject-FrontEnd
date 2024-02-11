@@ -1,8 +1,8 @@
 "use client";
 import SideNavbar, { SidebarItem } from "@/components/SideNavbar"
 import Header, { HeaderName } from "@/components/Header"
-import LeftColumn from "@/components/LeftColumn"
-import RightColumn from "@/components/RightColumn"
+import LeftColumn from "@/components/dashboard/LeftColumn"
+import RightColumn from "@/components/dashboard/RightColumn"
 import {
   UploadCloud,
   CopyCheck,
