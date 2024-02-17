@@ -5,6 +5,7 @@ export enum AccountType {
   ResearchCenter = 2,
   None = 0,
 }
+
 export type FileData = {
   file: File | null;
   fileName: string;

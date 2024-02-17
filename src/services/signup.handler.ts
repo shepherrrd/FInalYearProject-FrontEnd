@@ -6,6 +6,7 @@ import {
 } from "@/types/Signuptypes";
 import axios from "axios";
 
+
 export async function submitResearchCenterSignupDetails(
   formData: ResearchCenterSignupDetailsFormData
 ): Promise<SignupApiResponse> {
@@ -60,6 +61,7 @@ export async function submitResearchCenterSignupDetails(
     }
   }
 }
+
 
 export async function submitHospitalSignupDetails(
   formData: HospitalSignupDetailsFormData
