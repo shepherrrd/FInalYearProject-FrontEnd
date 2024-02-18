@@ -6,14 +6,14 @@ import { Search } from 'lucide-react';
 
 const Columndata = () => {
   return( 
-<div class="mt-16 flex flex-col h-screen w-full">
-  <div class="bg-[#F8F8F8] min-h-[10%] flex justify-center items-center">
+<div className="mt-16 flex flex-col h-screen w-full">
+  <div className="bg-[#F8F8F8] min-h-[10%] flex justify-center items-center">
   <div >
     <Searchbar/>
   </div>
 </div>
-<div class="bg-[#F8F8F8] min-h-[90%] flex justify-center items-center">
-<div class="">
+<div className="bg-[#F8F8F8] min-h-[90%] flex justify-center items-center">
+<div className="">
 <Databag/>
 </div>
 </div>

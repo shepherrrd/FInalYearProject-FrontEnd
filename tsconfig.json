@@ -45,7 +45,7 @@
     "src/layouts/**/*.tsx",
     "src/services/*.ts",
     "src/utilities/*.ts",
-    "src/types/*.ts",
+    "src/types/*.ts", "src/components/SideNavbar.tsx",
   ],
   "exclude": [
     "node_modules"

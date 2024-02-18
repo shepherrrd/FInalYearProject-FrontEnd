@@ -1,4 +1,4 @@
-import HospitalDashboard from "@/layouts/clinic/uploadHospital/hospital.dashboard";
+import HospitalDashboard from "@/layouts/researcher/requestStatus/researchStatus";
 
 export default function Dashboard() {
   return (

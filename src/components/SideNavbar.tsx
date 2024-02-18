@@ -1,11 +1,14 @@
-import React, { useState, createContext, useContext } from 'react';
+import React, { useState, createContext, useContext, ReactNode, ReactElement } from 'react';
 import Image from 'next/image';
 import { ChevronFirst, MoreVertical, ChevronLast } from 'lucide-react';
 
-const SidebarContext = createContext();
+const SidebarContext = createContext<{ expanded: boolean } | undefined>(undefined);
 
-const SideNavbar = ({ children }) => {
-  // Change the initial state to false to start with the sidebar collapsed
+interface SideNavbarProps {
+  children: ReactNode;
+}
+
+const SideNavbar = ({ children }: SideNavbarProps) => {
   const [expanded, setExpanded] = useState(false);
 
   return (
@@ -21,7 +24,6 @@ const SideNavbar = ({ children }) => {
               className={`overflow-hidden transition-all ${expanded ? "w-9" : "w-0"}`} 
               alt='Logo'
             />
-            {/* Text- Anahit */}
             <span className={`ml-2 transition-all text-lg ${expanded ? "inline" : "hidden"}`}>Anahit</span>
           </div>
           <button onClick={() => setExpanded(curr => !curr)} className='p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100'>
@@ -48,8 +50,16 @@ const SideNavbar = ({ children }) => {
   );
 };
 
-export function SidebarItem({ icon, text, active, alert }) {
-  const { expanded } = useContext(SidebarContext);
+interface SidebarItemProps {
+  icon: ReactElement;
+  text: string;
+  active?: boolean;
+  alert?: boolean;
+}
+
+export function SidebarItem({ icon, text, active = false, alert = false }: SidebarItemProps) {
+  const context = useContext(SidebarContext);
+  const expanded = context ? context.expanded : false;
 
   return (
     <li 
@@ -64,12 +74,12 @@ export function SidebarItem({ icon, text, active, alert }) {
       {alert && (
         <div className={`absolute right-2 w-2 h-2 rounded bg-indigo-400 ${expanded ? "" : "top-2"}`}/>
       )}
-{!expanded && (
-  <div className="absolute left-full rounded-md px-2 py-1 ml-6 bg-indigo-100 text-sm invisible opacity-20 -translate-x-3 transition-all group-hover:visible group-hover:opacity-100 group-hover:translate-x-0">
-    {text}
-  </div>
-)}
- </li>
+      {!expanded && (
+        <div className="absolute left-full rounded-md px-2 py-1 ml-6 bg-indigo-100 text-sm invisible opacity-20 -translate-x-3 transition-all group-hover:visible group-hover:opacity-100 group-hover:translate-x-0">
+          {text}
+        </div>
+      )}
+    </li>
   );
 }
 
