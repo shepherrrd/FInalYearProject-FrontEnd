@@ -4,7 +4,7 @@ import Image from "next/image";
 export default function Home() {
   return (
     <div
-      className="flex w-full flex-col items-stretch pl-20 pt-12 max-md:max-w-full max-md:pl-5"
+      className="flex w-full flex-col items-stretch pl-20 pt-12 h-screen max-md:max-w-full max-md:pl-5"
       style={{
         background: "linear-gradient(222deg, #000 1.22%, #040D3E 106.28%)",
       }}
