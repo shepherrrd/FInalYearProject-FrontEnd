@@ -1,7 +1,7 @@
 "use client";
 import SideNavbar, { SidebarItem } from "@/components/SideNavbar"
 import Header, { HeaderName } from "@/components/Header"
-import OneColumn from "@/components/Researcher/requestStatus/Onecolumn"
+import OneColumn from "@/components/Researcher/availableHospital/Onecolumn"
 import {
   UploadCloud,
   CopyCheck,
