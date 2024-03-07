@@ -8,7 +8,6 @@ export async function handleLogin(
 ): Promise<LoginResponse> {
   try {
     const response: AxiosResponse = await axios.post(API.LOGIN, request);
-
     if (response.status === 200) {
       saveToLocalStorage("user", response.data.data as UserData);
       return { status: true, message: "Success", data: response.data.data };

@@ -50,3 +50,8 @@ export type SignupApiResponse = {
   message: string;
   erroData?: string[];
 };
+
+export type OTP = {
+  signupsessionkey: string;
+  code: string;
+};

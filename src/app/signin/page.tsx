@@ -33,9 +33,23 @@ export default function SignIn() {
     setIsLoading(true);
     try {
       const login = await handleLogin(request);
-      if (login.status) {
+      if (login?.status) {
         toast.success("Login successful");
         console.log(login);
+      
+        switch (login?.data?.userType) {
+          case 1:
+            router.push('/Admin/Users');
+            break;
+          case 2:
+            router.push('/Hospital/dashboard');
+            break;
+          case 3:
+            router.push('/Researcher/requestStatus');
+            break;
+          default:
+            console.error(`Unknown user type: ${login?.data?.userType}`);
+        }
       } else {
         toast.error(login.message);
         console.log(login);

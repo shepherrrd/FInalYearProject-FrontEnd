@@ -56,7 +56,7 @@ const SignupAccountTypeLayout: React.FC<SignupAccountTypeLayoutProps> = ({
           <option>Select Account Type</option>
           {/* Add your options here */}
           <option value="hospital">Hospital</option>
-          <option value="research">Pharmacy</option>
+          <option value="research">Researcher</option>
         </select>
       </div>
       <div className="flex flex-col gap-5 w-full font-['Poppins'] items-start">
