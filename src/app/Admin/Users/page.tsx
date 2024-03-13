@@ -1,13 +1,9 @@
 "use client";
 import SideNavbar, { SidebarItem } from "@/components/SideNavbar"
 import Header, { HeaderName } from "@/components/Header"
-import OneColumn from "@/components/Admin/requestStatus/Onecolumn"
+import OneColumn from "@/components/Admin/Users/Onecolumn"
 import {
-  UploadCloud,
-  CopyCheck,
-  Layers,
-  LayoutDashboard,
-  Settings,
+  User
 } from "lucide-react"
 
 
@@ -15,7 +11,7 @@ export default function HospitalDashboard(){
   return (
     <div className="flex">
       <SideNavbar>
-        <SidebarItem  icon={<LayoutDashboard size={20} />} text="Dashboard" active={undefined} alert={undefined} />
+        <SidebarItem  icon={<User size={20} />} text="Users" active alert={undefined} />
       </SideNavbar>
       <div className="flex-1 md:flex h-screen relative">
         <Header>

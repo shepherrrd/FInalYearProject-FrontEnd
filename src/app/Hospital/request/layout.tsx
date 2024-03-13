@@ -4,7 +4,7 @@ const inter = Inter({ subsets: ["latin"] });
 import "@/app/globals.css";
 
 export const metadata: Metadata = {
-  title: "Signup Repository",
+  title: "Requests",
 };
 
 export default function RootLayout({
