@@ -7,7 +7,7 @@ const Databag = () => {
     <div className="bg-[#F8F8F8] min-h-[100%] flex justify-center items-center">
 
         <div className="bg-white p-4 w-11/12 h-screen max-h-[98%]  ">
-<p>Requests</p>
+        <p className=" font-bold mt-5 text-2xl">Requests</p>
 <Searchbar/>
 <RequestTable/>
         </div>

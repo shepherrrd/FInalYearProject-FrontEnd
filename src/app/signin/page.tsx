@@ -42,7 +42,7 @@ export default function SignIn() {
             router.push('/Admin/Users');
             break;
           case 2:
-            router.push('/Hospital/dashboard');
+            router.push('/Hospital/request');
             break;
           case 3:
             router.push('/Researcher/requestStatus');
