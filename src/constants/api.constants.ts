@@ -1,4 +1,4 @@
-const IsLive = false;
+const IsLive = true;
 const API_URL = IsLive
   ? "https://finalyearproject-api.onrender.com"
   : "https://localhost:7028";

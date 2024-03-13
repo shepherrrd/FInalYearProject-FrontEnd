@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import "react-toastify/dist/ReactToastify.css";
+import { AccountType } from "@/types/Signuptypes";
 
 export default function SignIn() {
   const router = useRouter();
@@ -36,16 +37,16 @@ export default function SignIn() {
       if (login?.status) {
         toast.success("Login successful");
         console.log(login);
-      
+
         switch (login?.data?.userType) {
-          case 1:
-            router.push('/Admin/Users');
+          case AccountType.Admin:
+            router.push("/Admin/Users");
             break;
-          case 2:
-            router.push('/Hospital/dashboard');
+          case AccountType.Hospital:
+            router.push("/Hospital/dashboard");
             break;
-          case 3:
-            router.push('/Researcher/requestStatus');
+          case AccountType.ResearchCenter:
+            router.push("/Researcher/requestStatus");
             break;
           default:
             console.error(`Unknown user type: ${login?.data?.userType}`);

@@ -1,9 +1,9 @@
 import { List } from "postcss/lib/list";
 
 export enum AccountType {
-  Hospital = 1,
-  ResearchCenter = 2,
-  None = 0,
+  Admin = 1,
+  Hospital = 2,
+  ResearchCenter = 3,
 }
 
 export type FileData = {
