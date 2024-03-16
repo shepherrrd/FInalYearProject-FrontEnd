@@ -35,6 +35,7 @@ export default function HospitalDashboard() {
         setStaticData(response.data!);
       } catch (error) {}
     };
+    fetchData();
   });
   const pageCount = Math.ceil(staticData.length / itemsPerPage);
 
