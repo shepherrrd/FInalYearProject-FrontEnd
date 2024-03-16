@@ -1,26 +1,138 @@
 "use client";
 import SideNavbar, { SidebarItem } from "@/components/SideNavbar"
-import Header, { HeaderName } from "@/components/Header"
-import OneColumn from "@/components/Admin/Users/Onecolumn"
+import React, { useState } from 'react';
 import {
+  MenuSquare,
+  LucideCircleEllipsis,
   User
 } from "lucide-react"
 
+import ReactPaginate from 'react-paginate';
+
+interface PageClickEvent {
+  selected: number;
+}
 
 export default function HospitalDashboard(){
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 6; // Set items per page to 6
+
+  const staticData = [
+    { no: 1, userType: 'Hospital', name: 'Chukwudi Emeka', location: 'Lagos', date: '10/03/24', time: '10:00' },
+    { no: 2, userType: 'Researcher', name: 'Aisha Bello', location: 'Abuja', date: '11/03/24', time: '10:30' },
+    { no: 3, userType: 'Hospital', name: 'Tunde Adebayo', location: 'Ibadan', date: '12/03/24', time: '11:00' },
+    { no: 4, userType: 'Researcher', name: 'Ngozi Okonkwo', location: 'Enugu', date: '13/03/24', time: '11:30' },
+    { no: 5, userType: 'Hospital', name: 'Kunle Adewale', location: 'Kano', date: '14/03/24', time: '12:00' },
+    { no: 6, userType: 'Researcher', name: 'Fatima Yusuf', location: 'Benin City', date: '15/03/24', time: '12:30' },
+    { no: 7, userType: 'Hospital', name: 'Oluwaseun Adekunle', location: 'Port Harcourt', date: '16/03/24', time: '13:00' },
+    { no: 8, userType: 'Researcher', name: 'Ifeoma Chukwu', location: 'Ilorin', date: '17/03/24', time: '13:30' },
+    { no: 9, userType: 'Hospital', name: 'Segun Okeke', location: 'Jos', date: '18/03/24', time: '14:00' },
+    { no: 10, userType: 'Researcher', name: 'Amaka Ndubuisi', location: 'Sokoto', date: '19/03/24', time: '14:30' },
+  ];
+  
+  
+
+  const pageCount = Math.ceil(staticData.length / itemsPerPage);
+
+  const handlePageClick = ({ selected }: PageClickEvent) => {
+    setCurrentPage(selected);
+  };
+
+  const displayData = staticData.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage); 
+
   return (
     <div className="flex">
       <SideNavbar>
         <SidebarItem  icon={<User size={20} />} text="Users" active alert={undefined} />
       </SideNavbar>
       <div className="flex-1 md:flex h-screen relative">
-        <Header>
-          <HeaderName text="Manage Data"/>
-        </Header>
-        <OneColumn/>
+      <div className="mt-16 flex flex-col w-full">
+    <div className="bg-[#F8F8F8] min-h-[100%] flex justify-center items-center">
+        <div className="bg-white p-4 w-11/12 h-screen max-h-[98%]  ">
+        <p className="text-2xl font-bold">Users</p>
+        <div className="flex justify-center">
+          <form className="w-[60rem]">
+              <label className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+              <div className="flex relative w-full">
+                  <div className="flex absolute inset-y-0 start-0 items-center ps-3 pointer-events-none">
+                      <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                          <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                      </svg>
+                  </div>
+                  <input type="search" id="default-search" className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-l-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for upload" />
+                  <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-r-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+                  <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 ml-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Filter</button>
+                  
+              </div>
+          </form>
+      </div>
 
+      <div className="flex flex-col">
+      <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+          <div className="overflow-hidden">
+            <div className="bg-white border-8 border-white ml-6 shadow-lg">
+              <table className="min-w-full text-left text-sm font-light">
+                <thead className="border-b font-medium dark:border-neutral-500">
+                  <tr>
+                    <th scope="col" className="px-4 py-2 lg:pr-20 lg:py-2"> No.</th>
+                    <th scope="col" className="px-4 py-2 lg:pr-20 lg:py-2">User Type</th>
+                    <th scope="col" className="px-4 py-2 lg:pr-20 lg:py-2">Name</th>
+                    <th scope="col" className="px-4 py-2 lg:pr-24 lg:py-2">Location</th>
+                    <th scope="col" className="px-4 py-2 lg:pr-20 lg:py-2">date</th>
+                    <th scope="col" className="px-4 py-2 lg:pr-20 lg:py-2"></th>
+                    <th scope="col" className="px-4 py-2 lg:pr-20 lg:py-2"></th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  {displayData.map((item, index) => (
+                    <tr className="border-b dark:border-neutral-500" key={index}>
+                      <td className='whitespace-nowrap py-4 lg:px-4'>{item.no}</td>
+                      <td className='whitespace-nowrap py-4 lg:px-4'>{item.userType}</td>
+                      <td className='whitespace-nowrap py-4 lg:px-4'>{item.name}</td>
+                      <td className='whitespace-nowrap py-4 lg:px-4'>{item.location}</td>
+                      <td className='whitespace-nowrap py-4 lg:px-4'>{item.date}</td>
+                      <td className='whitespace-nowrap py-4 lg:px-4'>
+                          <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Accept</button>
+                      </td>
+                      <td className='whitespace-nowrap py-4 lg:px-4'>
+                          <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Decline</button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="flex justify-center mt-4">
+        <ReactPaginate
+          breakLabel="..."
+          nextLabel="Next >"
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={5}
+          pageCount={pageCount}
+          previousLabel="< Previous"
+          renderOnZeroPageCount={null}
+          containerClassName="pagination flex"
+          pageClassName="page-item mx-1"
+          pageLinkClassName="page-link"
+          previousClassName="page-item mx-1"
+          previousLinkClassName="page-link"
+          nextClassName="page-item mx-1"
+          nextLinkClassName="page-link"
+          breakClassName="page-item mx-1"
+          breakLinkClassName="page-link"
+          activeClassName="active"
+        />
+      </div>
+    </div>
+        </div>
+    </div>
+</div>
       </div>
       </div>
-
   )
 }
