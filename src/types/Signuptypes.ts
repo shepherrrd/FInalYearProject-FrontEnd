@@ -4,6 +4,7 @@ export enum AccountType {
   Admin = 1,
   Hospital = 2,
   ResearchCenter = 3,
+  None = 4,
 }
 
 export type FileData = {
