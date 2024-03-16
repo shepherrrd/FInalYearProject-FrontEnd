@@ -1,3 +1,5 @@
+import { AccountType } from "./Signuptypes";
+
 export type LoginRequest = {
   email: string;
   password: string;
@@ -15,7 +17,7 @@ export type UserData = {
   firstName: string;
   lastName: string | null;
   middleName: string | null;
-  userType: number;
+  userType: AccountType;
   accountStatus: number;
   roleId: number;
   roleText: string | null;

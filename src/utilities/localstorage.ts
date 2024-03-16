@@ -7,12 +7,12 @@ export function saveToLocalStorage<T>(key: string, value: T): void {
   }
 }
 
-export function getFromLocalStorage<T>(key: string, defaultValue: T): T {
+export function getFromLocalStorage<T>(key: string): T | null {
   try {
     const serializedValue = localStorage.getItem(key);
-    return serializedValue ? (JSON.parse(serializedValue) as T) : defaultValue;
+    return serializedValue ? (JSON.parse(serializedValue) as T) : null;
   } catch (error) {
     console.error("Error reading from local storage", error);
-    return defaultValue;
+    return null;
   }
 }
