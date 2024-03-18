@@ -24,9 +24,11 @@ export default function makeRequest(){
 
 <div className="flex justify-between">
   <div className="w-1/3 p-2">
+  <label htmlFor="file">IRB Approval</label>
     <input type="file" className="block w-full p-2 border border-gray-300 rounded-md mb-4" />
+
     <select className="block w-full p-2 border border-gray-300 rounded-md mb-4">
-      <option value="">Select an option</option>
+      <option value="">Select a data set</option>
       <option value="option1">Option 1</option>
       <option value="option2">Option 2</option>
       <option value="option3">Option 3</option>
@@ -34,9 +36,11 @@ export default function makeRequest(){
     <button type="submit" className="block w-full p-2 bg-blue-500 text-white rounded-md">Submit</button>
   </div>
   <div className="w-1/3 p-2">
+  <label>Proposal</label>
     <input type="file" className="block w-full p-2 border border-gray-300 rounded-md" />
   </div>
   <div className="w-1/3 p-2">
+  <label>Reason for application</label>
     <input type="file" className="block w-full p-2 border border-gray-300 rounded-md" />
   </div>
 </div>
