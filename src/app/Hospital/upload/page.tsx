@@ -21,10 +21,14 @@ export default function HospitalUpload(){
   const fileChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       const selectedFiles = Array.from(event.target.files);
-      setFiles((prevFiles) => [...prevFiles, ...selectedFiles]);
+      if (selectedFiles.length > 2) {
+        alert("You can only upload up to 2 files at a time.");
+      }
+      const csvFiles = selectedFiles.filter((file) => file.name.endsWith(".csv")).slice(0, 2);
+      setFiles((prevFiles) => [...prevFiles, ...csvFiles]);
     }
   };
-
+  
   const deleteFile = (index: number) => {
     setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
   };
@@ -62,6 +66,7 @@ export default function HospitalUpload(){
                 id="hidden-input"
                 type="file"
                 multiple
+                accept=".csv" 
                 className="hidden"
                 onChange={fileChangeHandler}
               />

@@ -19,7 +19,6 @@ export type displayRequest = {
     time: string;
   };
 
-
 export type uploadClinicalData = {
     SDTMDATA: FileData;
     ICDDATA: FileData;

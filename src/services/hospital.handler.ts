@@ -34,3 +34,6 @@ function getUserData(): UserData | null {
     }
   }
 }
+export async function uploadclinicaldata() {
+  
+}
