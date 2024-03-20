@@ -9,6 +9,7 @@ export const API = {
   RESEARCH_CENTER_SIGNUP: `${API_URL}/api/Registration/RegisterResearchCenter`,
   GET_REGISTRAION_REQUESTS: `${API_URL}/api/Admin/GetAllRegistrationRequests`,
   UPDATE_REGISTRAION_REQUESTS: `${API_URL}/api/Admin/ChangeRequestStatus`,
+  GET_HOSPITAL_REQUESTS:`${API_URL}/api/HospitalDashBoard/GetRequests`,
   GET_RESOURCES: `${API_URL}/api/resources`,
   GET_RESOURCES_BY_HOSPITAL: `${API_URL}/api/resources-by-hospital`,
   GET_RESOURCES_BY_RESEARCH_CENTER: `${API_URL}/api/resources-by-research-center`,

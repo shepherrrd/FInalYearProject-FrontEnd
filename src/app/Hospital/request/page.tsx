@@ -1,41 +1,38 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SideNavbar, { SidebarItem } from "@/components/SideNavbar"
 import { UploadCloud, CopyCheck, LayoutDashboard } from "lucide-react"
 import { useRouter } from "next/navigation"; 
 import ReactPaginate from 'react-paginate';
-
+import {displayRequest} from '@/hospital.types'
 interface PageClickEvent {
   selected: number;
 }
 
 
+
 export default function Hospitalreq() {
   const router = useRouter(); 
   const [currentPage, setCurrentPage] = useState(0);
+  const [requestData, setRequestData] = useState<displayRequest[]>([]);
   const itemsPerPage = 6; // Set items per page to 6
 
-  const staticData = [
-    { no: 1, reqNo: 12345, name: 'Chukwudi Emeka', date: '10/03/24', time: '10:00' },
-    { no: 2, reqNo: 12346, name: 'Aisha Bello', date: '11/03/24', time: '10:30' },
-    { no: 3, reqNo: 12347, name: 'Tunde Adebayo', date: '12/03/24', time: '11:00' },
-    { no: 4, reqNo: 12348, name: 'Ngozi Okonkwo', date: '13/03/24', time: '11:30' },
-    { no: 5, reqNo: 12349, name: 'Kunle Adewale', date: '14/03/24', time: '12:00' },
-    { no: 6, reqNo: 12350, name: 'Fatima Yusuf', date: '15/03/24', time: '12:30' },
-    { no: 7, reqNo: 12351, name: 'Oluwaseun Adekunle', date: '16/03/24', time: '13:00' },
-    { no: 8, reqNo: 12352, name: 'Ifeoma Chukwu', date: '17/03/24', time: '13:30' },
-    { no: 9, reqNo: 12353, name: 'Segun Okeke', date: '18/03/24', time: '14:00' },
-    { no: 10, reqNo: 12354, name: 'Amaka Ndubuisi', date: '19/03/24', time: '14:30' },
-  ];
-  
+  useEffect(() => {
+    // Retrieve data from localStorage and parse it
+    const storedData = localStorage.getItem('hospitalrequests');
+    if (storedData) {
+      const parsedData = JSON.parse(storedData).data;
+      setRequestData(parsedData);
+    }
+  }, []);
 
-  const pageCount = Math.ceil(staticData.length / itemsPerPage); // Calculate the number of pages based on static data
+  const pageCount = Math.ceil(requestData.length / itemsPerPage); // Calculate the number of pages based on request data
 
   const handlePageClick = ({ selected }: PageClickEvent) => {
     setCurrentPage(selected);
   };
 
-  const displayData = staticData.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage); // Slice the data for the current page
+  const displayData = requestData.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage); // Slice the data for the current page
 
   return (
     <div className="flex">

@@ -6,5 +6,13 @@ export type decideReq = {
 export type Requests = {
     status: string;
     message: string;
-    Description: String[];
+    data: String[];
 };
+
+export type displayRequest = {
+    no: number;
+    reqNo: number;
+    name: string;
+    date: string;
+    time: string;
+  };
