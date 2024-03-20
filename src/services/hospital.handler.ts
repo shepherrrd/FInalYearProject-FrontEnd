@@ -9,7 +9,7 @@ function getUserData(): UserData | null {
     return userDataString ? JSON.parse(userDataString) : null;
   }
 
-  async function getHospitalRequests(): Promise<void> {
+  export async function getHospitalRequests(): Promise<void> { {
     const userData = getUserData();
   
     if (!userData || !userData.token) {
@@ -33,4 +33,4 @@ function getUserData(): UserData | null {
       console.error('Error fetching hospital requests:', error);
     }
   }
-  
+}

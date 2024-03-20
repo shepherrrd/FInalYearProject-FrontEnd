@@ -5,26 +5,35 @@ import { UploadCloud, CopyCheck, LayoutDashboard } from "lucide-react"
 import { useRouter } from "next/navigation"; 
 import ReactPaginate from 'react-paginate';
 import {displayRequest} from '@/hospital.types'
+import { getHospitalRequests } from '@/services/hospital.handler';
 interface PageClickEvent {
   selected: number;
 }
-
-
 
 export default function Hospitalreq() {
   const router = useRouter(); 
   const [currentPage, setCurrentPage] = useState(0);
   const [requestData, setRequestData] = useState<displayRequest[]>([]);
   const itemsPerPage = 6; // Set items per page to 6
-
+  console.log("Hello");
+ 
   useEffect(() => {
-    // Retrieve data from localStorage and parse it
-    const storedData = localStorage.getItem('hospitalrequests');
-    if (storedData) {
-      const parsedData = JSON.parse(storedData).data;
-      setRequestData(parsedData);
-    }
+    const fetchData = async () => {
+      await getHospitalRequests(); 
+
+      const storedData = localStorage.getItem('hospitalrequests');
+      if (storedData) {
+        console.log(storedData);
+        const parsedData = JSON.parse(storedData).data;
+        setRequestData(parsedData);
+      }else {
+        console.log('empty');
+      }
+    };
+  
+    fetchData();
   }, []);
+  
 
   const pageCount = Math.ceil(requestData.length / itemsPerPage); // Calculate the number of pages based on request data
 
