@@ -1,3 +1,5 @@
+import { FileData } from "./Signuptypes";
+
 export type decideReq = {
     privateKey: string;
     requestID: Int32Array;
@@ -16,3 +18,11 @@ export type displayRequest = {
     date: string;
     time: string;
   };
+
+
+export type uploadClinicalData = {
+    SDTMDATA: FileData;
+    ICDDATA: FileData;
+    medicalRecordTypes: string;
+    PublicKey: string;
+}

@@ -15,7 +15,7 @@ export default function Hospitalreq() {
   const [currentPage, setCurrentPage] = useState(0);
   const [requestData, setRequestData] = useState<displayRequest[]>([]);
   const itemsPerPage = 6; // Set items per page to 6
-  console.log("Hello");
+  console.log("Hello"); // delete later
  
   useEffect(() => {
     const fetchData = async () => {
