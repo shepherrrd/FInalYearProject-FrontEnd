@@ -1,6 +1,7 @@
 import React, { useState, createContext, useContext, ReactNode, ReactElement } from 'react';
 import Image from 'next/image';
 import { ChevronFirst, MoreVertical, ChevronLast } from 'lucide-react';
+import { UserData } from "@/types/auth.types";
 
 const SidebarContext = createContext<{ expanded: boolean } | undefined>(undefined);
 
@@ -8,8 +9,14 @@ interface SideNavbarProps {
   children: ReactNode;
 }
 
+function getUserData(): UserData | null {
+  const userDataString = localStorage.getItem('user');
+  return userDataString ? JSON.parse(userDataString) : null;
+}
+
 const SideNavbar = ({ children }: SideNavbarProps) => {
   const [expanded, setExpanded] = useState(false);
+  const userData = getUserData();
 
   return (
     <aside className='h-screen'>
@@ -39,8 +46,12 @@ const SideNavbar = ({ children }: SideNavbarProps) => {
           <Image loading="lazy" src='/avatar1.png' width={32} height={32} alt='Logo' className='w-10 h-10'/> 
           <div className={`flex justify-between items-center overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"}`}>
             <div className='leading-4'>
-              <h4 className="front-semibold">John Doe</h4>
-              <span className='text-xs text-gray-600'>johndoe@gmail.com</span>
+            <h4 className="front-semibold">
+              {userData ? `${userData.firstName || 'Unknown'} ${userData.lastName || ''}`.trim() : 'Unknown'}
+            </h4>
+            <span className='text-xs text-gray-600'>
+              {userData ? userData.email || 'Unknown' : 'Unknown'}
+            </span>
             </div>
             <MoreVertical size={20}/>
           </div>
@@ -57,6 +68,7 @@ interface SidebarItemProps {
   alert?: boolean;
   onClick?: () => void;
 }
+
 export function SidebarItem({ icon, text, active = false, alert = false, onClick }: SidebarItemProps) {
   const context = useContext(SidebarContext);
   const expanded = context ? context.expanded : false;

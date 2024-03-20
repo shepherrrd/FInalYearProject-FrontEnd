@@ -43,7 +43,7 @@ export default function SignIn() {
             router.push("/Admin/Users");
             break;
           case AccountType.Hospital:
-            router.push("/Hospital/dashboard");
+            router.push("/Hospital/request");
             break;
           case AccountType.ResearchCenter:
             router.push("/Researcher/requestStatus");
