@@ -2,7 +2,6 @@
 import SideNavbar, { SidebarItem } from "@/components/SideNavbar";
 import React, { useEffect, useState } from "react";
 import { MenuSquare, LucideCircleEllipsis, User } from "lucide-react";
-
 import ReactPaginate from "react-paginate";
 import { RegistrationRequests } from "@/types/admin.types";
 import {
@@ -19,6 +18,7 @@ export default function HospitalDashboard() {
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 6; // Set items per page to 6
   const [staticData, setStaticData] = useState<RegistrationRequests[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const ChangeRequestStatus = async (id: number, isApproved: boolean) => {
     await UpdateRegistrationRequests(id, isApproved);
@@ -29,21 +29,33 @@ export default function HospitalDashboard() {
       try {
         var response = await GetAllRegistrationRequests();
         if (!response.status) {
-          toast.error("Something went wront");
+          toast.error("Something went wrong");
           return;
         }
         setStaticData(response.data!);
-      } catch (error) {}
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+      }
     };
     fetchData();
-  });
+  }, []);
+
   const pageCount = Math.ceil(staticData.length / itemsPerPage);
 
   const handlePageClick = ({ selected }: PageClickEvent) => {
     setCurrentPage(selected);
   };
 
-  const displayData = staticData.slice(
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredData = staticData.filter(item =>
+    item.id.toString().includes(searchTerm)
+  );
+
+  const displayData = filteredData.slice(
     currentPage * itemsPerPage,
     (currentPage + 1) * itemsPerPage
   );
@@ -61,7 +73,7 @@ export default function HospitalDashboard() {
       <div className="flex-1 md:flex h-screen relative">
         <div className="mt-16 flex flex-col w-full">
           <div className="bg-[#F8F8F8] min-h-[100%] flex justify-center items-center">
-            <div className="bg-white p-4 w-11/12 h-screen max-h-[98%]  ">
+            <div className="bg-white p-4 w-11/12 h-screen max-h-[98%]">
               <p className="text-2xl font-bold">Users</p>
               <div className="flex justify-center">
                 <form className="w-[60rem]">
@@ -90,22 +102,23 @@ export default function HospitalDashboard() {
                       type="search"
                       id="default-search"
                       className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-l-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      placeholder="Search for upload"
+                      placeholder="Search by ID"
+                      onChange={handleSearchChange}
                     />
                     <button
-                      type="submit"
-                      className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-r-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    >
-                      Search
-                    </button>
-                    <button
-                      type="button"
-                      className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 ml-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-                    >
-                      Filter
-                    </button>
-                  </div>
-                </form>
+                     type="submit"
+                     className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-r-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                   >
+                     Search
+                   </button>
+                   {/* <button
+                     type="button"
+                     className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 ml-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                   >
+                     Filter by Status
+                   </button> */}
+                 </div>
+               </form>
               </div>
 
               <div className="flex flex-col">
@@ -114,87 +127,42 @@ export default function HospitalDashboard() {
                     <div className="overflow-hidden">
                       <div className="bg-white border-8 border-white ml-6 shadow-lg">
                         <table className="min-w-full text-left text-sm font-light">
-                          <thead className="border-b font-medium dark:border-neutral-500">
-                            <tr>
-                              <th
-                                scope="col"
-                                className="px-4 py-2 lg:pr-20 lg:py-2"
-                              >
-                                {" "}
-                                No.
-                              </th>
-                              <th
-                                scope="col"
-                                className="px-4 py-2 lg:pr-20 lg:py-2"
-                              >
-                                User Type
-                              </th>
-                              <th
-                                scope="col"
-                                className="px-4 py-2 lg:pr-20 lg:py-2"
-                              >
-                                Name
-                              </th>
-                              <th
-                                scope="col"
-                                className="px-4 py-2 lg:pr-24 lg:py-2"
-                              >
-                                Location
-                              </th>
-                              <th
-                                scope="col"
-                                className="px-4 py-2 lg:pr-20 lg:py-2"
-                              >
-                                date
-                              </th>
-                              <th
-                                scope="col"
-                                className="px-4 py-2 lg:pr-20 lg:py-2"
-                              ></th>
-                              <th
-                                scope="col"
-                                className="px-4 py-2 lg:pr-20 lg:py-2"
-                              ></th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {displayData.map((item, index) => (
-                              <tr
-                                className="border-b dark:border-neutral-500"
-                                key={index}
-                              >
-                                <td className="whitespace-nowrap py-4 lg:px-4">
-                                  {item.id}
-                                </td>
-                                <td className="whitespace-nowrap py-4 lg:px-4">
-                                  {item.userType}
-                                </td>
-                                <td className="whitespace-nowrap py-4 lg:px-4">
-                                  {item.dateRequested.getDate()}
-                                </td>
-                                <td className="whitespace-nowrap py-4 lg:px-4">
-                                  <button
-                                    className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-                                    onClick={() =>
-                                      ChangeRequestStatus(item.id, true)
-                                    }
-                                  >
-                                    Accept
-                                  </button>
-                                </td>
-                                <td className="whitespace-nowrap py-4 lg:px-4">
-                                  <button
-                                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                                    onClick={() =>
-                                      ChangeRequestStatus(item.id, false)
-                                    }
-                                  >
-                                    Decline
-                                  </button>
-                                </td>
-                              </tr>
-                            ))}
-                          </tbody>
+                        <thead className="border-b font-medium dark:border-neutral-500">
+  <tr>
+    <th scope="col" className="px-4 py-2 lg:pr-20 lg:py-2">No.</th>
+    <th scope="col" className="px-4 py-2 lg:pr-20 lg:py-2">ID</th>
+    <th scope="col" className="px-4 py-2 lg:pr-24 lg:py-2">Approval Status</th>
+    <th scope="col" className="px-4 py-2 lg:pr-20 lg:py-2">Date Requested</th>
+    <th scope="col" className="px-4 py-2 lg:pr-20 lg:py-2"></th>
+    <th scope="col" className="px-4 py-2 lg:pr-20 lg:py-2"></th>
+  </tr>
+</thead>
+<tbody>
+  {displayData.map((item, index) => (
+    <tr className="border-b dark:border-neutral-500" key={index}>
+      <td className="whitespace-nowrap py-4 lg:px-4">{index + 1}</td>
+      <td className="whitespace-nowrap py-4 lg:px-4">{item.id}</td>
+      <td className="whitespace-nowrap py-4 lg:px-4">{item.isApproved ? 'Approved' : 'Pending'}</td>
+      <td className="whitespace-nowrap py-4 lg:px-4">{item.dateRequested ? new Date(item.dateRequested).toLocaleDateString() : 'N/A'}</td>
+      <td className="whitespace-nowrap py-4 lg:px-4">
+        <button
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+          onClick={() => ChangeRequestStatus(item.id, true)}
+        >
+          Accept
+        </button>
+      </td>
+      <td className="whitespace-nowrap py-4 lg:px-4">
+        <button
+          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          onClick={() => ChangeRequestStatus(item.id, false)}
+        >
+          Decline
+        </button>
+      </td>
+    </tr>
+  ))}
+</tbody>
                         </table>
                       </div>
                     </div>

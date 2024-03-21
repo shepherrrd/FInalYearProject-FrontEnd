@@ -10,6 +10,10 @@ interface SideNavbarProps {
 }
 
 function getUserData(): UserData | null {
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
   const userDataString = localStorage.getItem('user');
   return userDataString ? JSON.parse(userDataString) : null;
 }
