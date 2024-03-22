@@ -12,6 +12,7 @@ export const API = {
   GET_HOSPITAL_REQUESTS:`${API_URL}/api/HospitalDashBoard/GetRequests`,
   GET_REQUEST_STATUS:`${API_URL}/api/ResearchCenter/ResearchCenterDashboard`,
   SEND_DATA_REQUEST:`${API_URL}/api/ResearchCenter/ResearchCenterDashboard`,
+  GET_MEDICAL_RECORDS:`${API_URL}/api/ResearchCenter/GetMedicalRecords/1`,
   GET_RESOURCES: `${API_URL}/api/resources`,
   GET_RESOURCES_BY_HOSPITAL: `${API_URL}/api/resources-by-hospital`,
   GET_RESOURCES_BY_RESEARCH_CENTER: `${API_URL}/api/resources-by-research-center`,

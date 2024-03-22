@@ -1,26 +1,49 @@
 "use client";
-import React, { useState } from 'react';
-import SideNavbar, { SidebarItem } from "@/components/SideNavbar"
-import {
-  MenuSquare,
-  LucideCircleEllipsis
-} from "lucide-react"
+import React, { useState, useEffect } from 'react';
+import SideNavbar, { SidebarItem } from "@/components/SideNavbar";
+import { MenuSquare } from "lucide-react";
+import axios from 'axios';
 import { sendReq } from "@/types/research.types";
 import { uploadRequest } from "@/researcher.handler";
+import { API } from "@/constants/api.constants";
+
+type MedicalRecord = {
+  id: number;
+  hospitalName: string;
+  recordType: number;
+};
 
 export default function MakeRequest() {
   const [irbApproval, setIrbApproval] = useState<File | null>(null);
   const [proposal, setProposal] = useState<File | null>(null);
   const [description, setDescription] = useState('');
+  const [medicalRecords, setMedicalRecords] = useState<MedicalRecord[]>([]);
+  const [selectedRecordID, setSelectedRecordID] = useState<number | null>(null);
+
+  useEffect(() => {
+    const fetchMedicalRecords = async () => {
+      try {
+        const response = await axios.get(API.GET_MEDICAL_RECORDS);
+        if (response.data.status) {
+          setMedicalRecords(response.data.data);
+        } else {
+          console.error('Failed to fetch medical records:', response.data.message);
+        }
+      } catch (error) {
+        console.error('Error fetching medical records:', error);
+      }
+    };
+    fetchMedicalRecords();
+  }, []);
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!irbApproval || !proposal) {
-      alert('Please select all required files');
+    if (!irbApproval || !proposal || !selectedRecordID) {
+      alert('Please select all required fields');
       return;
     }
     const data: sendReq = {
-      MedicalRecordID: 1, // Set this value as needed
+      MedicalRecordID: selectedRecordID,
       IRBApproval: {
         file: irbApproval,
         fileName: irbApproval.name
@@ -33,7 +56,7 @@ export default function MakeRequest() {
     };
     await uploadRequest(data);
   };
-  
+
   return (
     <div className="flex">
       <SideNavbar>
@@ -59,6 +82,18 @@ export default function MakeRequest() {
                   <label htmlFor="description">Reason for application</label>
                   <textarea id="description" className="block w-full p-2 border border-gray-300 rounded-md"
                     value={description} onChange={(e) => setDescription(e.target.value)} />
+                </div>
+                <div className="w-1/3 p-2">
+                  <label htmlFor="medicalRecord">Select a Medical Record</label>
+                  <select id="medicalRecord" className="block w-full p-2 border border-gray-300 rounded-md mb-4"
+  onChange={(e) => setSelectedRecordID(Number(e.target.value))} value={selectedRecordID || ''}>
+  <option value="">Select a record</option>
+  {medicalRecords.map(record => (
+    <option key={record.id} value={record.id}>
+      {record.hospitalName} - {record.recordType}
+    </option>
+  ))}
+</select>
                 </div>
                 <button type="submit" className="block w-full p-2 bg-blue-500 text-white rounded-md mt-4">Submit</button>
               </form>
