@@ -11,6 +11,7 @@ export const API = {
   UPDATE_REGISTRAION_REQUESTS: `${API_URL}/api/Admin/ChangeRequestStatus`,
   GET_HOSPITAL_REQUESTS:`${API_URL}/api/HospitalDashBoard/GetRequests`,
   GET_REQUEST_STATUS:`${API_URL}/api/ResearchCenter/ResearchCenterDashboard`,
+  SEND_DATA_REQUEST:`${API_URL}/api/ResearchCenter/ResearchCenterDashboard`,
   GET_RESOURCES: `${API_URL}/api/resources`,
   GET_RESOURCES_BY_HOSPITAL: `${API_URL}/api/resources-by-hospital`,
   GET_RESOURCES_BY_RESEARCH_CENTER: `${API_URL}/api/resources-by-research-center`,

@@ -8,13 +8,14 @@ export type Requests = {
 
 
 export type sendReq = {
-    MedicalRecordID: number;
-    email: string;
-    IRBApproval: FileData;
-    Proposal: FileData;
-    Description: string;
-  };
-
+  MedicalRecordID: number;
+  email?: string;
+  IRBApproval: FileData;
+  Proposal: FileData;
+  Description: string;
+};
   export type GetMedicalRecords = {
     type: number;
   };
+
+  
