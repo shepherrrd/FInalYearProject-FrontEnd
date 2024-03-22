@@ -19,8 +19,8 @@ export default function Hospitalreq() {
 
   useEffect(() => {
     const storedData = getFromLocalStorage('requestStatus');
-    if (storedData) {
-      setRequestData(storedData);
+    if (storedData && Array.isArray(storedData)) {
+      setRequestData(storedData as displayRequest[]);
       console.log('Retrieved data from local storage:', storedData);
     }
   }, []);
