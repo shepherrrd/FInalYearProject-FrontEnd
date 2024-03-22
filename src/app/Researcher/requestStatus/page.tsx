@@ -1,11 +1,12 @@
 "use client";
 import React, { useEffect, useState } from 'react';
-import SideNavbar, { SidebarItem } from "@/components/SideNavbar"
-import { UploadCloud, CopyCheck, LayoutDashboard } from "lucide-react"
+import SideNavbar, { SidebarItem } from "@/components/SideNavbar";
+import { UploadCloud, CopyCheck } from "lucide-react";
 import { useRouter } from "next/navigation"; 
 import ReactPaginate from 'react-paginate';
-import {displayRequest} from '@/hospital.types'
-import { getHospitalRequests } from '@/services/hospital.handler';
+import { displayRequest } from '@/hospital.types';
+import { getFromLocalStorage } from '@/utilities/localstorage';
+
 interface PageClickEvent {
   selected: number;
 }
@@ -14,19 +15,23 @@ export default function Hospitalreq() {
   const router = useRouter(); 
   const [currentPage, setCurrentPage] = useState(0);
   const [requestData, setRequestData] = useState<displayRequest[]>([]);
-  const itemsPerPage = 6; // Set items per page to 6
-  console.log("Hello"); // delete later
- 
-  useEffect(() => {}, []);
-  
+  const itemsPerPage = 6;
 
-  const pageCount = Math.ceil(requestData.length / itemsPerPage); // Calculate the number of pages based on request data
+  useEffect(() => {
+    const storedData = getFromLocalStorage('requestStatus');
+    if (storedData) {
+      setRequestData(storedData);
+      console.log('Retrieved data from local storage:', storedData);
+    }
+  }, []);
+
+  const pageCount = Math.ceil(requestData.length / itemsPerPage);
 
   const handlePageClick = ({ selected }: PageClickEvent) => {
     setCurrentPage(selected);
   };
 
-  const displayData = requestData.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage); // Slice the data for the current page
+  const displayData = requestData.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
 
   return (
     <div className="flex">
