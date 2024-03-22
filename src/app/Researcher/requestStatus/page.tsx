@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import ReactPaginate from 'react-paginate';
 import { displayRequest } from '@/hospital.types';
 import { getFromLocalStorage } from '@/utilities/localstorage';
-
+import { requestStatus} from '@/researcher.handler';
 interface PageClickEvent {
   selected: number;
 }
@@ -18,11 +18,13 @@ export default function Hospitalreq() {
   const itemsPerPage = 6;
 
   useEffect(() => {
-    const storedData = getFromLocalStorage('requestStatus');
-    if (storedData && Array.isArray(storedData)) {
-      setRequestData(storedData as displayRequest[]);
-      console.log('Retrieved data from local storage:', storedData);
-    }
+    requestStatus().then(() => {
+      const storedData = getFromLocalStorage('requestStatus');
+      if (storedData && Array.isArray(storedData)) {
+        setRequestData(storedData as displayRequest[]);
+        console.log('Retrieved data from local storage:', storedData);
+      }
+    });
   }, []);
 
   const pageCount = Math.ceil(requestData.length / itemsPerPage);

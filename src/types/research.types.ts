@@ -15,4 +15,6 @@ export type sendReq = {
     Description: string;
   };
 
-  
+  export type GetMedicalRecords = {
+    type: number;
+  };

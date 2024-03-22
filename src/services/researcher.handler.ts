@@ -9,7 +9,7 @@ function getUserData(): UserData | null {
   return userDataString ? JSON.parse(userDataString) : null;
 }
 
-async function requestStatus() {
+export async function requestStatus() {
   const userData = getUserData();
   if (!userData) {
     console.error('User data not found in local storage');
