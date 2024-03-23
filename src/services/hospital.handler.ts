@@ -57,6 +57,7 @@ export async function uploadclinicaldata(
     });
     const response: AxiosResponse<BaseResponse> = await axios.post(
       API.UPLOAD_CLINICAL_DATA,
+      form,
       {
         headers: {
           Authorization: `Bearer ${userData.token}`,
