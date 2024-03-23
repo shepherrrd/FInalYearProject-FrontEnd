@@ -1,27 +1,34 @@
 import { FileData } from "./Signuptypes";
 
 export type decideReq = {
-    privateKey: string;
-    requestID: Int32Array;
+  privateKey: string;
+  requestID: Int32Array;
 };
 
 export type Requests = {
-    status: string;
-    message: string;
-    data: String[];
+  status: string;
+  message: string;
+  data: String[];
+};
+
+export type UploadRequest = {
+  PublicKey: string;
+  SDTMDATA: FileData;
+  ICDDATA: FileData;
+  medicalRecordTypes: number;
 };
 
 export type displayRequest = {
-    no: number;
-    reqNo: number;
-    name: string;
-    date: string;
-    time: string;
-  };
+  no: number;
+  reqNo: number;
+  name: string;
+  date: string;
+  time: string;
+};
 
 export type uploadClinicalData = {
-    SDTMDATA: FileData;
-    ICDDATA: FileData;
-    medicalRecordTypes: string;
-    PublicKey: string;
-}
+  SDTMDATA: FileData;
+  ICDDATA: FileData;
+  medicalRecordTypes: string;
+  PublicKey: string;
+};
