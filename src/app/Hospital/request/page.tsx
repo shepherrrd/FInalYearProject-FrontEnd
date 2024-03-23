@@ -181,9 +181,21 @@ export default function Hospitalreq() {
                                   ).toLocaleTimeString()}
                                 </td>
                                 <td className="whitespace-nowrap py-4 lg:px-4">
-                                  <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                    View
-                                  </button>
+                                <button
+  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+  onClick={() => {
+    localStorage.setItem('selectedItem', JSON.stringify(item));
+    const storedItem = localStorage.getItem('selectedItem');
+    if (storedItem) {
+      console.log('Saved item:', JSON.parse(storedItem));
+    } else {
+      console.log('No item saved in localStorage');
+    }
+    router.push("/Hospital/viewrequest");
+  }}
+>
+  View
+</button>
                                 </td>
                               </tr>
                             ))}

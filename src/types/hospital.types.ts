@@ -41,3 +41,10 @@ export type uploadClinicalData = {
   medicalRecordTypes: string;
   PublicKey: string;
 };
+
+export interface RequestItems {
+  passport: string;
+  name: string;
+  description: string;
+  irbProposal: string;
+}
