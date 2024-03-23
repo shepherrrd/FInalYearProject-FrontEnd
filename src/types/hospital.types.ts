@@ -16,6 +16,7 @@ export type UploadRequest = {
   SDTMDATA: FileData;
   ICDDATA: FileData;
   medicalRecordTypes: number;
+  ExponentKey: string;
 };
 
 export type displayRequest = {

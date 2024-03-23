@@ -61,6 +61,7 @@ export default function HospitalUpload() {
       ICDDATA: icd,
       medicalRecordTypes: 1,
       PublicKey: PublicKey,
+      ExponentKey: ExponentKey,
     };
     var response = await uploadclinicaldata(req);
     if (!response.status) {
