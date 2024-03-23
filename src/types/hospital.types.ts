@@ -4,11 +4,19 @@ export type decideReq = {
   privateKey: string;
   requestID: Int32Array;
 };
-
-export type Requests = {
-  status: string;
+export interface RequestResponse {
+  description: string;
+  irbProposal: string;
+  passport: string;
+  name: string;
+  id: number;
+  timeCreated: string;
+  timeUpdated: string;
+}
+export type GetRequestsResponse = {
+  status: boolean;
   message: string;
-  data: String[];
+  data?: RequestResponse[];
 };
 
 export type UploadRequest = {

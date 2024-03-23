@@ -1,7 +1,7 @@
 import { API } from "@/constants/api.constants";
 import { BaseResponse } from "@/types/admin.types";
 import { UserData } from "@/types/auth.types";
-import { Requests, UploadRequest } from "@/types/hospital.types";
+import { GetRequestsResponse, UploadRequest } from "@/types/hospital.types";
 import { saveToLocalStorage } from "@/utilities/localstorage";
 import axios, { AxiosResponse } from "axios";
 
@@ -10,29 +10,36 @@ function getUserData(): UserData | null {
   return userDataString ? JSON.parse(userDataString) : null;
 }
 
-export async function getHospitalRequests(): Promise<void> {
+export async function getHospitalRequests(): Promise<GetRequestsResponse> {
   {
     const userData = getUserData();
 
     if (!userData || !userData.token) {
       console.error("User token is not available.");
-      return;
+      return { status: false, message: "User token is not available." };
     }
 
     try {
-      const response = await axios.get<Requests>(API.GET_HOSPITAL_REQUESTS, {
-        headers: {
-          Authorization: `Bearer ${userData.token}`,
-        },
-      });
+      const response = await axios.get<GetRequestsResponse>(
+        API.GET_HOSPITAL_REQUESTS,
+        {
+          headers: {
+            Authorization: `Bearer ${userData.token}`,
+          },
+        }
+      );
 
-      if (response.data) {
-        saveToLocalStorage("hospitalrequests", response.data as Requests);
-      } else {
-        console.error("No request data received from the server.");
+      if (!response.data.status) {
+        return { status: false, message: response.data.message };
       }
+      return {
+        status: true,
+        message: response.data.message,
+        data: response.data.data,
+      };
     } catch (error) {
       console.error("Error fetching hospital requests:", error);
+      return { status: false, message: "Error fetching hospital requests." };
     }
   }
 }
