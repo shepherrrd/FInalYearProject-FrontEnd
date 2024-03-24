@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import SideNavbar, { SidebarItem } from "@/components/SideNavbar";
-import { UploadCloud, CopyCheck } from "lucide-react";
+import { Send, CopyCheck } from "lucide-react";
 import { useRouter } from "next/navigation"; 
 import ReactPaginate from 'react-paginate';
 import { displayRequest } from '@/hospital.types';
@@ -23,6 +23,7 @@ export default function Hospitalreq() {
       if (storedData && Array.isArray(storedData)) {
         setRequestData(storedData as displayRequest[]);
         console.log('Retrieved data from local storage:', storedData);
+        console.log('Request Data:', requestData);
       }
     });
   }, []);
@@ -38,8 +39,8 @@ export default function Hospitalreq() {
   return (
     <div className="flex">
       <SideNavbar>
-        <SidebarItem icon={<UploadCloud size={20} />} text="Upload" active={undefined} alert={undefined} onClick={() => router.push('/Hospital/upload')}  />
-        <SidebarItem icon={<CopyCheck size={20} />} text="Requests" alert active onClick={() => router.push('/Hospital/request')} />
+        <SidebarItem icon={<Send size={20} />} text="Send Request" active={undefined} alert={undefined} onClick={() => router.push('/Researcher/makeRequest')}  />
+        <SidebarItem icon={<CopyCheck size={20} />} text="Request Status" alert active onClick={() => router.push('/Researcher/requestStatus')} />
       </SideNavbar>    <div className="flex-1 md:flex h-screen relative">
       <div className="mt-16 flex flex-col w-full">
     <div className="bg-[#F8F8F8] min-h-[100%] flex justify-center items-center">
@@ -67,30 +68,29 @@ export default function Hospitalreq() {
         <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
           <div className="overflow-hidden">
             <div className="bg-white border-8 border-white ml-6 shadow-lg">
-              <table className="min-w-full text-left text-sm font-light">
-                <thead className="border-b font-medium dark:border-neutral-500">
-                  <tr>
-                    <th scope="col" className="px-4 py-2 lg:pr-20 lg:py-2">No</th>
-                    <th scope="col" className="px-4 py-2 lg:pr-24 lg:py-2">Request Name</th>
-                    <th scope="col" className="px-4 py-2 lg:pr-20 lg:py-2">Date</th>
-                    <th scope="col" className="px-4 py-2 lg:pr-20 lg:py-2">Request Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {displayData.map((item, index) => (
-                    <tr className="border-b dark:border-neutral-500" key={index}>
-                      <td className='whitespace-nowrap py-4 lg:px-4'></td>
-                      <td className='whitespace-nowrap py-4 lg:px-4'></td>
-                      <td className='whitespace-nowrap py-4 lg:px-4'></td>
-                      <td className='whitespace-nowrap py-4 lg:px-4'></td>
-                      <td className='whitespace-nowrap py-4 lg:px-4'></td>
-                      <td className='whitespace-nowrap py-4 lg:px-4'>
-                          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">View</button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <table className="min-w-full text-left text-sm font-light">
+  <thead className="border-b font-medium dark:border-neutral-500">
+    <tr>
+      <th scope="col" className="px-4 py-2 lg:pr-20 lg:py-2">ID</th>
+      <th scope="col" className="px-4 py-2 lg:pr-24 lg:py-2">Request Name</th>
+      <th scope="col" className="px-4 py-2 lg:pr-20 lg:py-2">Description</th>
+      <th scope="col" className="px-4 py-2 lg:pr-20 lg:py-2">Approval Status</th>
+      <th scope="col" className="px-4 py-2 lg:pr-20 lg:py-2">Date</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    {displayData.map((item, index) => (
+      <tr className="border-b dark:border-neutral-500" key={index}>
+        <td className="whitespace-nowrap py-4 lg:px-4">{item.id}</td>
+        <td className="whitespace-nowrap py-4 lg:px-4">{item.name}</td>
+        <td className="whitespace-nowrap py-4 lg:px-4">{item.description}</td>
+        <td className="whitespace-nowrap py-4 lg:px-4">{item.isApproved ? 'Approved' : 'Pending'}</td>
+        <td className="whitespace-nowrap py-4 lg:px-4">{item.timeCreated}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>
             </div>
           </div>
         </div>

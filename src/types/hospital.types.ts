@@ -28,11 +28,12 @@ export type UploadRequest = {
 };
 
 export type displayRequest = {
-  no: number;
-  reqNo: number;
+  id: number;
+  description: number;
   name: string;
-  date: string;
+  isApproved: string;
   time: string;
+  timeCreated: string;
 };
 
 export type uploadClinicalData = {
@@ -47,4 +48,7 @@ export interface RequestItems {
   name: string;
   description: string;
   irbProposal: string;
+  irbApproval: string;
+  reason: string;
+
 }

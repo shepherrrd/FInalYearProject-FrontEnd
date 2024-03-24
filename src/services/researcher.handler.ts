@@ -23,15 +23,26 @@ export async function requestStatus() {
       },
     });
 
-    if (response.data && response.data.status === 'success') {
-      saveToLocalStorage('requestStatus', response.data.data);
+    console.log('Response:', response); 
+    if (response.data && response.data.status === true) {
+      const processedData = response.data.data.map(item => ({
+        ...item,
+        timeCreated: item.timeCreated.split('T')[0],
+        timeUpdated: item.timeUpdated.split('T')[0],
+      }));
+      saveToLocalStorage('requestStatus', processedData);
       console.log('Data saved to local storage');
-    } else {
+      return processedData;
+    }else {
       console.error('Failed to fetch data:', response.data.message);
+      return null;
     }
   } catch (error) {
-    console.error('Error fetching data:', error);
-  }
+    if (axios.isAxiosError(error)) {
+      console.error('Error fetching data:', error.response?.data);
+    } else {
+      console.error('Error fetching data:', error);
+    }}
 }
 export async function uploadRequest(data: sendReq) {
   const userData = getUserData();
@@ -59,7 +70,7 @@ export async function uploadRequest(data: sendReq) {
       },
     });
 
-    if (response.data && response.data.status === 'success') {
+    if (response.data && response.data.status === true) {
       console.log('Request uploaded successfully');
     } else {
       console.error('Failed to upload request:', response.data.message);

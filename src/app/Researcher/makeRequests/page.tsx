@@ -1,7 +1,8 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import SideNavbar, { SidebarItem } from "@/components/SideNavbar";
-import { MenuSquare } from "lucide-react";
+import { Send, CopyCheck } from "lucide-react";
+import { useRouter } from "next/navigation"; 
 import axios from 'axios';
 import { sendReq } from "@/types/research.types";
 import { uploadRequest } from "@/researcher.handler";
@@ -14,6 +15,7 @@ type MedicalRecord = {
 };
 
 export default function MakeRequest() {
+  const router = useRouter(); 
   const [irbApproval, setIrbApproval] = useState<File | null>(null);
   const [proposal, setProposal] = useState<File | null>(null);
   const [description, setDescription] = useState('');
@@ -59,9 +61,10 @@ export default function MakeRequest() {
 
   return (
     <div className="flex">
-      <SideNavbar>
-        <SidebarItem icon={<MenuSquare size={20} />} text="Request" active />
-      </SideNavbar>
+     <SideNavbar>
+        <SidebarItem icon={<Send size={20} />} text="Send Request" active={undefined} alert={undefined} onClick={() => router.push('/Researcher/makeRequest')}  />
+        <SidebarItem icon={<CopyCheck size={20} />} text="Request Status" alert active onClick={() => router.push('/Researcher/requestStatus')} />
+      </SideNavbar> 
       <div className="flex-1 md:flex h-screen relative">
         <div className="mt-16 flex flex-col w-full">
           <div className="bg-[#F8F8F8] min-h-[100%] flex justify-center items-center">

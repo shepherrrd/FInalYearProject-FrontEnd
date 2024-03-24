@@ -15,7 +15,7 @@ export default function HospitalDashboard() {
   return (
     <div className="flex">
       <SideNavbar>
-        <SidebarItem
+        <SidebarItem 
           icon={<UploadCloud size={20} />}
           text="Upload"
           active={undefined}
@@ -46,16 +46,20 @@ export default function HospitalDashboard() {
               <p className="mb-4">Nigeria</p>
             </div>
             <div className="flex flex-col space-y-4 mb-4">
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 rounded w-full h-12 text-center">
+              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 rounded w-full h-12 text-center"
+              onClick={() => selectedItem && window.open(selectedItem.reason, '_blank')}
+              >
                 View Request
               </button>
               <button
   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 rounded w-full h-12 text-center"
-  onClick={() => selectedItem && window.open(selectedItem.irbProposal, '_blank')}
+  onClick={() => selectedItem && window.open(selectedItem.irbApproval, '_blank')}
 >
-  IRB Proposal
+  IRB Approval
 </button>
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 rounded w-full h-12 text-center">
+              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 rounded w-full h-12 text-center"
+                onClick={() => selectedItem && window.open(selectedItem.irbProposal, '_blank')}
+              >
                 Proposal
               </button>
             </div>
