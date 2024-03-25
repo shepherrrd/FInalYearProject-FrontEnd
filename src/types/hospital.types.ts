@@ -50,5 +50,5 @@ export interface RequestItems {
   irbProposal: string;
   irbApproval: string;
   reason: string;
-
+  id:number;
 }

@@ -39,9 +39,9 @@ export default function Hospitalreq() {
   return (
     <div className="flex">
       <SideNavbar>
-        <SidebarItem icon={<Send size={20} />} text="Send Request" active={undefined} alert={undefined} onClick={() => router.push('/Researcher/makeRequest')}  />
+        <SidebarItem icon={<Send size={20} />} text="Send Request" active={undefined} alert={undefined} onClick={() => router.push('/Researcher/makeRequests')}  />
         <SidebarItem icon={<CopyCheck size={20} />} text="Request Status" alert active onClick={() => router.push('/Researcher/requestStatus')} />
-      </SideNavbar>    <div className="flex-1 md:flex h-screen relative">
+      </SideNavbar>   <div className="flex-1 md:flex h-screen relative">
       <div className="mt-16 flex flex-col w-full">
     <div className="bg-[#F8F8F8] min-h-[100%] flex justify-center items-center">
         <div className="bg-white p-4 w-11/12 h-screen max-h-[98%]  ">

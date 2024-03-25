@@ -53,20 +53,22 @@ export async function uploadRequest(data: sendReq) {
 
   const formData = new FormData();
   formData.append('MedicalRecordID', data.MedicalRecordID.toString());
-  formData.append('email', userData.email); // Get email from userData
+  formData.append('Description', data.Description);
   if (data.IRBApproval.file) {
     formData.append('IRBApproval', data.IRBApproval.file, data.IRBApproval.fileName);
   }
   if (data.Proposal.file) {
     formData.append('Proposal', data.Proposal.file, data.Proposal.fileName);
   }
-  formData.append('Description', data.Description);
+  if (data.Reason.file) { // Add this line
+    formData.append('Reason', data.Reason.file, data.Reason.fileName);
+  }
 
   try {
     const response: AxiosResponse<Requests> = await axios.post(API.SEND_DATA_REQUEST, formData, {
       headers: {
         'Authorization': `Bearer ${userData.token}`,
-        'Content-Type': 'multipart/form-data', // Important for file uploads
+        'Content-Type': 'multipart/form-data',
       },
     });
 

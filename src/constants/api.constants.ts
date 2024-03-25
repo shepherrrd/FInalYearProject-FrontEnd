@@ -14,6 +14,9 @@ export const API = {
   SEND_DATA_REQUEST: `${API_URL}/api/ResearchCenter/ResearchCenterDashboard`,
   GET_MEDICAL_RECORDS: `${API_URL}/api/ResearchCenter/GetMedicalRecords/1`,
   UPLOAD_CLINICAL_DATA: `${API_URL}/api/HospitalDashBoard/UploadData`,
+  ACCEPT_REQUEST: `${API_URL}/api/HospitalDashBoard/UploadData`,
+  REJECT_REQUEST: `${API_URL}/api/HospitalDashBoard/UploadData`,
+
   GET_RESOURCES: `${API_URL}/api/resources`,
   GET_RESOURCES_BY_HOSPITAL: `${API_URL}/api/resources-by-hospital`,
   GET_RESOURCES_BY_RESEARCH_CENTER: `${API_URL}/api/resources-by-research-center`,
