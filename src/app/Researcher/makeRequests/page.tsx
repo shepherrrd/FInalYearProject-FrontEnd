@@ -25,27 +25,27 @@ export default function MakeRequest() {
   const userData = JSON.parse(localStorage.getItem('user') || '{}');
 console.log(userData)
 
-useEffect(() => {
-  const fetchMedicalRecords = async () => {
-    try {
-      const response = await axios.get(API.GET_MEDICAL_RECORDS, {
-        headers: {
-          Authorization: `Bearer ${userData.token}`,
-        },
-      });
+  useEffect(() => {
+    const fetchMedicalRecords = async () => {
+      try {
+        const response = await axios.get(API.GET_MEDICAL_RECORDS, {
+          headers: {
+            Authorization: `Bearer ${userData.token}`,
+          },
+        });
 
-      if (response.data && response.data.status === true) {
-        setMedicalRecords(response.data.data);
-      } else {
-        console.error('Failed to fetch medical records:', response.data.message);
+        if (response.data && response.data.status === true) {
+          setMedicalRecords(response.data.data);
+        } else {
+          console.error('Failed to fetch medical records:', response.data.message);
+        }
+      } catch (error) {
+        console.error('Error fetching medical records:', error);
       }
-    } catch (error) {
-      console.error('Error fetching medical records:', error);
-    }
-  };
+    };
 
-  fetchMedicalRecords();
-}, [userData.token]);
+    fetchMedicalRecords();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
