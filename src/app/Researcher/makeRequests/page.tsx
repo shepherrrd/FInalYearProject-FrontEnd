@@ -1,9 +1,11 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import SideNavbar, { SidebarItem } from '@/components/SideNavbar';
-import { Send, CopyCheck } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import SideNavbar, { SidebarItem } from '@/components/SideNavbar';
+import { Send, CopyCheck } from 'lucide-react';
 import { API } from '@/constants/api.constants';
 import { uploadRequest } from '@/researcher.handler';
 import { sendReq } from '@/types/research.types';
@@ -23,7 +25,6 @@ export default function MakeRequest() {
   const [proposal, setProposal] = useState<File | null>(null);
   const [reason, setReason] = useState<File | null>(null);
   const userData = JSON.parse(localStorage.getItem('user') || '{}');
-console.log(userData)
 
   useEffect(() => {
     const fetchMedicalRecords = async () => {
@@ -45,7 +46,7 @@ console.log(userData)
     };
 
     fetchMedicalRecords();
-  }, []);
+  }, [userData.token]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,17 +61,24 @@ console.log(userData)
       Description: description,
       IRBApproval: { file: irbApproval, fileName: irbApproval.name },
       Proposal: { file: proposal, fileName: proposal.name },
-      Reason: { file: reason, fileName: reason.name }, // Added Reason file to the request data
+      Reason: { file: reason, fileName: reason.name },
     };
 
-    await uploadRequest(requestData);
+    try {
+      await uploadRequest(requestData);
+      toast.success('Request sent successfully!');
+    } catch (error) {
+      console.error('Error sending request:', error);
+      toast.error('Failed to send request.');
+    }
   };
 
   return (
     <div className="flex">
+      <ToastContainer position="top-center" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
       <SideNavbar>
         <SidebarItem icon={<Send size={20} />} text="Send Request" active alert={undefined} onClick={() => router.push('/Researcher/makeRequests')} />
-        <SidebarItem icon={<CopyCheck size={20} />} text="Request Status"active={undefined} alert={undefined} onClick={() => router.push('/Researcher/requestStatus')} />
+        <SidebarItem icon={<CopyCheck size={20} />} text="Request Status" active={undefined} alert={undefined} onClick={() => router.push('/Researcher/requestStatus')} />
       </SideNavbar>
 
       <div className="flex-1 md:flex h-screen relative">
@@ -84,28 +92,28 @@ console.log(userData)
                   <textarea className="block w-full p-2 border border-gray-300 rounded-md h-32 resize-none" placeholder="Enter your text here..." value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
                 </div>
                 <div className="flex justify-between">
-  <div className="w-1/3 p-2">
-    <label htmlFor="file">IRB Approval</label>
-    <input type="file" className="block w-full p-2 border border-gray-300 rounded-md mb-4" onChange={(e) => setIrbApproval(e.target.files ? e.target.files[0] : null)} />
+                  <div className="w-1/3 p-2">
+                    <label htmlFor="file">IRB Approval</label>
+                    <input type="file" className="block w-full p-2 border border-gray-300 rounded-md mb-4" onChange={(e) => setIrbApproval(e.target.files ? e.target.files[0] : null)} />
 
-    <select className="block w-full p-2 border border-gray-300 rounded-md mb-4" value={selectedRecord} onChange={(e) => setSelectedRecord(e.target.value === '' ? '' : Number(e.target.value))}>
-      <option value="">Select a data set</option>
-      {medicalRecords.map((record) => (
-        <option key={record.id} value={record.id}>
-          {`${record.hospitalName} - Type: ${record.recordType} - ID: ${record.id}`}
-        </option>
-      ))}
-    </select>
-  </div>
-  <div className="w-1/3 p-2">
-    <label htmlFor="file">Reason for Application</label>
-    <input type="file" className="block w-full p-2 border border-gray-300 rounded-md mb-4" onChange={(e) => setReason(e.target.files ? e.target.files[0] : null)} />
-  </div>
-  <div className="w-1/3 p-2">
-    <label htmlFor="file">Proposal</label>
-    <input type="file" className="block w-full p-2 border border-gray-300 rounded-md" onChange={(e) => setProposal(e.target.files ? e.target.files[0] : null)} />
-  </div>
-</div>
+                    <select className="block w-full p-2 border border-gray-300 rounded-md mb-4" value={selectedRecord} onChange={(e) => setSelectedRecord(e.target.value === '' ? '' : Number(e.target.value))}>
+                    <option value="">Select a data set</option>
+                      {medicalRecords.map((record) => (
+                        <option key={record.id} value={record.id}>
+                          {`${record.hospitalName} - Type: ${record.recordType} - ID: ${record.id}`}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="w-1/3 p-2">
+                    <label htmlFor="file">Reason for Application</label>
+                    <input type="file" className="block w-full p-2 border border-gray-300 rounded-md mb-4" onChange={(e) => setReason(e.target.files ? e.target.files[0] : null)} />
+                  </div>
+                  <div className="w-1/3 p-2">
+                    <label htmlFor="file">Proposal</label>
+                    <input type="file" className="block w-full p-2 border border-gray-300 rounded-md" onChange={(e) => setProposal(e.target.files ? e.target.files[0] : null)} />
+                  </div>
+                </div>
                 <button type="submit" className="mt-4 block w-full p-2 bg-blue-500 text-white rounded-md">Submit Request</button>
               </form>
             </div>
@@ -113,6 +121,5 @@ console.log(userData)
         </div>
       </div>
     </div>
-   
   );
 }

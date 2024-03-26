@@ -60,7 +60,7 @@ export default function Hospitalreq() {
           active
           onClick={() => router.push("/Hospital/request")}
         />
-      </SideNavbar>{" "}
+      </SideNavbar>
       <div className="flex-1 md:flex h-screen relative">
         <div className="mt-16 flex flex-col w-full">
           <div className="bg-[#F8F8F8] min-h-[100%] flex justify-center items-center">

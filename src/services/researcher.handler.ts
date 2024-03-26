@@ -60,12 +60,12 @@ export async function uploadRequest(data: sendReq) {
   if (data.Proposal.file) {
     formData.append('Proposal', data.Proposal.file, data.Proposal.fileName);
   }
-  if (data.Reason.file) { // Add this line
+  if (data.Reason.file) {
     formData.append('Reason', data.Reason.file, data.Reason.fileName);
   }
 
   try {
-    const response: AxiosResponse<Requests> = await axios.post(API.SEND_DATA_REQUEST, formData, {
+    const response: AxiosResponse<Requests> = await axios.post(API.SEND_DATA_REQUEST, formData, { // Update the API endpoint here
       headers: {
         'Authorization': `Bearer ${userData.token}`,
         'Content-Type': 'multipart/form-data',

@@ -1,4 +1,4 @@
-import React, { useState, createContext, useContext, ReactNode, ReactElement } from 'react';
+import React, { useState, createContext, useContext, useEffect, ReactNode, ReactElement } from 'react';
 import Image from 'next/image';
 import { ChevronFirst, MoreVertical, ChevronLast } from 'lucide-react';
 import { UserData } from "@/types/auth.types";
@@ -9,18 +9,16 @@ interface SideNavbarProps {
   children: ReactNode;
 }
 
-function getUserData(): UserData | null {
-  if (typeof window === 'undefined') {
-    return null;
-  }
-
-  const userDataString = localStorage.getItem('user');
-  return userDataString ? JSON.parse(userDataString) : null;
-}
-
 const SideNavbar = ({ children }: SideNavbarProps) => {
   const [expanded, setExpanded] = useState(false);
-  const userData = getUserData();
+  const [userData, setUserData] = useState<UserData | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const userDataString = localStorage.getItem('user');
+      setUserData(userDataString ? JSON.parse(userDataString) : null);
+    }
+  }, []);
 
   return (
     <aside className='h-screen'>
@@ -84,7 +82,7 @@ export function SidebarItem({ icon, text, active = false, alert = false, onClick
           ? "bg-gradient-to-tr from-indigo-200 to-indigo-100 text-indigo-800"
           : "hover:bg-indigo-50 text-gray-600"
       }`}
-      onClick={onClick} // Add the onClick handler here
+      onClick={onClick} 
     >
       {icon}
       <span className={`flex justify-between items-center overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"}`}>{text}</span>
