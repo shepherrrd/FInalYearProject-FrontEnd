@@ -21,30 +21,31 @@ export default function MakeRequest() {
   const [description, setDescription] = useState<string>('');
   const [irbApproval, setIrbApproval] = useState<File | null>(null);
   const [proposal, setProposal] = useState<File | null>(null);
-  const [reason, setReason] = useState<File | null>(null); // Added state for Reason file
+  const [reason, setReason] = useState<File | null>(null);
   const userData = JSON.parse(localStorage.getItem('user') || '{}');
+console.log(userData)
 
-  useEffect(() => {
-    const fetchMedicalRecords = async () => {
-      try {
-        const response = await axios.get(API.GET_MEDICAL_RECORDS, {
-          headers: {
-            Authorization: `Bearer ${userData.token}`,
-          },
-        });
+useEffect(() => {
+  const fetchMedicalRecords = async () => {
+    try {
+      const response = await axios.get(API.GET_MEDICAL_RECORDS, {
+        headers: {
+          Authorization: `Bearer ${userData.token}`,
+        },
+      });
 
-        if (response.data && response.data.status === true) {
-          setMedicalRecords(response.data.data);
-        } else {
-          console.error('Failed to fetch medical records:', response.data.message);
-        }
-      } catch (error) {
-        console.error('Error fetching medical records:', error);
+      if (response.data && response.data.status === true) {
+        setMedicalRecords(response.data.data);
+      } else {
+        console.error('Failed to fetch medical records:', response.data.message);
       }
-    };
+    } catch (error) {
+      console.error('Error fetching medical records:', error);
+    }
+  };
 
-    fetchMedicalRecords();
-  }, []);
+  fetchMedicalRecords();
+}, [userData.token]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -68,8 +69,8 @@ export default function MakeRequest() {
   return (
     <div className="flex">
       <SideNavbar>
-        <SidebarItem icon={<Send size={20} />} text="Send Request" onClick={() => router.push('/Researcher/makeRequests')} />
-        <SidebarItem icon={<CopyCheck size={20} />} text="Request Status" onClick={() => router.push('/Researcher/requestStatus')} />
+        <SidebarItem icon={<Send size={20} />} text="Send Request" active alert={undefined} onClick={() => router.push('/Researcher/makeRequests')} />
+        <SidebarItem icon={<CopyCheck size={20} />} text="Request Status"active={undefined} alert={undefined} onClick={() => router.push('/Researcher/requestStatus')} />
       </SideNavbar>
 
       <div className="flex-1 md:flex h-screen relative">
@@ -83,31 +84,28 @@ export default function MakeRequest() {
                   <textarea className="block w-full p-2 border border-gray-300 rounded-md h-32 resize-none" placeholder="Enter your text here..." value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
                 </div>
                 <div className="flex justify-between">
-                  <div className="w-1/3 p-2">
-                    <label htmlFor="file">IRB Approval</label>
-                    <input type="file" className="block w-full p-2 border border-gray-300 rounded-md mb-4" onChange={(e) => setIrbApproval(e.target.files ? e.target.files[0] : null)} />
+  <div className="w-1/3 p-2">
+    <label htmlFor="file">IRB Approval</label>
+    <input type="file" className="block w-full p-2 border border-gray-300 rounded-md mb-4" onChange={(e) => setIrbApproval(e.target.files ? e.target.files[0] : null)} />
 
-                    <select className="block w-full p-2 border border-gray-300 rounded-md mb-4" value={selectedRecord} onChange={(e) => setSelectedRecord(e.target.value === '' ? '' : Number(e.target.value))}>
-                      <option value="">Select a data set</option>
-                      {medicalRecords.map((record) => (
-                        <option key={record.id} value={record.id}>
-                          {`${record.hospitalName} - Type: ${record.recordType} - ID: ${record.id}`}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  </div>
-                  <div className="w-1/3 p-2">
-                    <label>Reason for Application</label>
-                    <div className="w-1/3 p-2">
-                    <label>Reason for Application</label>
-                    <input type="file" className="block w-full p-2 border border-gray-300 rounded-md mb-4" onChange={(e) => setReason(e.target.files ? e.target.files[0] : null)} />
-                  </div>
-                  <div className="w-1/3 p-2">
-                    <label>Proposal</label>
-                    <input type="file" className="block w-full p-2 border border-gray-300 rounded-md" onChange={(e) => setProposal(e.target.files ? e.target.files[0] : null)} />
-                  </div>
-                </div>
+    <select className="block w-full p-2 border border-gray-300 rounded-md mb-4" value={selectedRecord} onChange={(e) => setSelectedRecord(e.target.value === '' ? '' : Number(e.target.value))}>
+      <option value="">Select a data set</option>
+      {medicalRecords.map((record) => (
+        <option key={record.id} value={record.id}>
+          {`${record.hospitalName} - Type: ${record.recordType} - ID: ${record.id}`}
+        </option>
+      ))}
+    </select>
+  </div>
+  <div className="w-1/3 p-2">
+    <label htmlFor="file">Reason for Application</label>
+    <input type="file" className="block w-full p-2 border border-gray-300 rounded-md mb-4" onChange={(e) => setReason(e.target.files ? e.target.files[0] : null)} />
+  </div>
+  <div className="w-1/3 p-2">
+    <label htmlFor="file">Proposal</label>
+    <input type="file" className="block w-full p-2 border border-gray-300 rounded-md" onChange={(e) => setProposal(e.target.files ? e.target.files[0] : null)} />
+  </div>
+</div>
                 <button type="submit" className="mt-4 block w-full p-2 bg-blue-500 text-white rounded-md">Submit Request</button>
               </form>
             </div>

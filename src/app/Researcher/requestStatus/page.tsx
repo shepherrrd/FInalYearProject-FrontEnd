@@ -40,7 +40,7 @@ export default function Hospitalreq() {
     <div className="flex">
       <SideNavbar>
         <SidebarItem icon={<Send size={20} />} text="Send Request" active={undefined} alert={undefined} onClick={() => router.push('/Researcher/makeRequests')}  />
-        <SidebarItem icon={<CopyCheck size={20} />} text="Request Status" alert active onClick={() => router.push('/Researcher/requestStatus')} />
+        <SidebarItem icon={<CopyCheck size={20} />} text="Request Status" active alert={undefined} onClick={() => router.push('/Researcher/requestStatus')} />
       </SideNavbar>   <div className="flex-1 md:flex h-screen relative">
       <div className="mt-16 flex flex-col w-full">
     <div className="bg-[#F8F8F8] min-h-[100%] flex justify-center items-center">
