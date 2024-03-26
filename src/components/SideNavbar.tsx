@@ -1,6 +1,7 @@
-import React, { useState, createContext, useContext, ReactNode, ReactElement } from 'react';
+import React, { useState, createContext, useContext, useEffect, ReactNode, ReactElement } from 'react';
 import Image from 'next/image';
-import { ChevronFirst, MoreVertical, ChevronLast } from 'lucide-react';
+import { ChevronFirst, MoreVertical, ChevronLast, LogOut } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { UserData } from "@/types/auth.types";
 
 const SidebarContext = createContext<{ expanded: boolean } | undefined>(undefined);
@@ -9,18 +10,22 @@ interface SideNavbarProps {
   children: ReactNode;
 }
 
-function getUserData(): UserData | null {
-  if (typeof window === 'undefined') {
-    return null;
-  }
-
-  const userDataString = localStorage.getItem('user');
-  return userDataString ? JSON.parse(userDataString) : null;
-}
-
 const SideNavbar = ({ children }: SideNavbarProps) => {
   const [expanded, setExpanded] = useState(false);
-  const userData = getUserData();
+  const [userData, setUserData] = useState<UserData | null>(null);
+  const router = useRouter(); // Initialize useRouter
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const userDataString = localStorage.getItem('user');
+      setUserData(userDataString ? JSON.parse(userDataString) : null);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.clear(); // Clear local storage
+    router.push('/signin'); // Redirect to sign-in page
+  };
 
   return (
     <aside className='h-screen'>
@@ -57,9 +62,16 @@ const SideNavbar = ({ children }: SideNavbarProps) => {
               {userData ? userData.email || 'Unknown' : 'Unknown'}
             </span>
             </div>
-            <MoreVertical size={20}/>
+               {/* Logout */}
+               <SidebarItem
+          icon={<LogOut size={20} />}
+          text="Logout"
+          onClick={handleLogout}
+        />
           </div>
         </div>
+
+
       </nav>
     </aside>
   );
@@ -84,20 +96,20 @@ export function SidebarItem({ icon, text, active = false, alert = false, onClick
           ? "bg-gradient-to-tr from-indigo-200 to-indigo-100 text-indigo-800"
           : "hover:bg-indigo-50 text-gray-600"
       }`}
-      onClick={onClick} // Add the onClick handler here
+      onClick={onClick} 
     >
       {icon}
       <span className={`flex justify-between items-center overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"}`}>{text}</span>
       {alert && (
-        <div className={`absolute right-2 w-2 h-2 rounded bg-indigo-400 ${expanded ? "" : "top-2"}`}/>
-      )}
-      {!expanded && (
-        <div className="absolute left-full rounded-md px-2 py-1 ml-6 bg-indigo-100 text-sm invisible opacity-20 -translate-x-3 transition-all group-hover:visible group-hover:opacity-100 group-hover:translate-x-0">
-          {text}
-        </div>
-      )}
-    </li>
-  );
+  <div className={`absolute right-2 w-2 h-2 rounded bg-indigo-400 ${expanded ? "" : "top-2"}`} />
+  )}
+  {!expanded && (
+    <div className="absolute left-full rounded-md px-2 py-1 ml-6 bg-indigo-100 text-sm invisible opacity-20 -translate-x-3 transition-all group-hover:visible group-hover:opacity-100 group-hover:translate-x-0">
+      {text}
+    </div>
+  )}
+</li>
+);
 }
 
 export default SideNavbar;

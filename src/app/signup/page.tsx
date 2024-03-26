@@ -122,6 +122,12 @@ export default function SignUp() {
     const hasSymbols = /[!@#$%^&*(),.?":{}|<>]/.test(password);
     return hasMinimumLength && hasLetters && hasNumbers && hasSymbols;
   };
+
+  const navigateToOTP = () => {
+    sleeps(3);
+    router.push("/signup/OTP", { scroll: false });
+  };
+  
   const HandleSubmit = async () => {
     if (password !== confirmPassword) {
       toast.error("Passwords do not match");
@@ -133,11 +139,11 @@ export default function SignUp() {
       );
       return;
     }
-
+  
     let ResearchSignupData: ResearchCenterSignupDetailsFormData;
     let HospitalSignupData: HospitalSignupDetailsFormData;
     setIsLoading(true);
-
+  
     switch (accountType) {
       case AccountType.ResearchCenter:
         ResearchSignupData = {
@@ -157,7 +163,7 @@ export default function SignUp() {
           ConfirmPassword: confirmPassword,
         };
         // make API call
-
+  
         try {
           setIsLoading(true);
           var signup = await submitResearchCenterSignupDetails(
@@ -165,7 +171,8 @@ export default function SignUp() {
           );
           if (signup.status) {
             toast.success(signup.message);
-            navigateToSignin();
+            saveToLocalStorage("signupsessionkey", signup.data); // Save the signup session key in local storage
+            navigateToOTP(); // Redirect to OTP page
           } else {
             toast.error(signup.message);
           }
@@ -191,7 +198,7 @@ export default function SignUp() {
           ConfirmPassword: confirmPassword,
         };
         // make API call
-
+  
         try {
           setIsLoading(true);
           const hospitalSignup = await submitHospitalSignupDetails(
@@ -199,7 +206,8 @@ export default function SignUp() {
           );
           if (hospitalSignup.status) {
             toast.success(hospitalSignup.message);
-            navigateToSignin();
+            saveToLocalStorage("signupsessionkey", hospitalSignup.data); // Save the signup session key in local storage
+            navigateToOTP(); // Redirect to OTP page
           } else {
             toast.error(hospitalSignup.message);
             console.log(hospitalSignup.erroData);
@@ -220,6 +228,7 @@ export default function SignUp() {
         break;
     }
   };
+  
   return (
     <>
       <ToastContainer />

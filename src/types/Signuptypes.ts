@@ -50,6 +50,7 @@ export type SignupApiResponse = {
   status: boolean;
   message: string;
   erroData?: string[];
+  data:string;
 };
 
 export type OTP = {

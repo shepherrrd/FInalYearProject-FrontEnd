@@ -23,15 +23,26 @@ export async function requestStatus() {
       },
     });
 
-    if (response.data && response.data.status === 'success') {
-      saveToLocalStorage('requestStatus', response.data.data);
+    console.log('Response:', response); 
+    if (response.data && response.data.status === true) {
+      const processedData = response.data.data.map(item => ({
+        ...item,
+        timeCreated: item.timeCreated.split('T')[0],
+        timeUpdated: item.timeUpdated.split('T')[0],
+      }));
+      saveToLocalStorage('requestStatus', processedData);
       console.log('Data saved to local storage');
-    } else {
+      return processedData;
+    }else {
       console.error('Failed to fetch data:', response.data.message);
+      return null;
     }
   } catch (error) {
-    console.error('Error fetching data:', error);
-  }
+    if (axios.isAxiosError(error)) {
+      console.error('Error fetching data:', error.response?.data);
+    } else {
+      console.error('Error fetching data:', error);
+    }}
 }
 export async function uploadRequest(data: sendReq) {
   const userData = getUserData();
@@ -42,24 +53,26 @@ export async function uploadRequest(data: sendReq) {
 
   const formData = new FormData();
   formData.append('MedicalRecordID', data.MedicalRecordID.toString());
-  formData.append('email', userData.email); // Get email from userData
+  formData.append('Description', data.Description);
   if (data.IRBApproval.file) {
     formData.append('IRBApproval', data.IRBApproval.file, data.IRBApproval.fileName);
   }
   if (data.Proposal.file) {
     formData.append('Proposal', data.Proposal.file, data.Proposal.fileName);
   }
-  formData.append('Description', data.Description);
+  if (data.Reason.file) {
+    formData.append('Reason', data.Reason.file, data.Reason.fileName);
+  }
 
   try {
-    const response: AxiosResponse<Requests> = await axios.post(API.SEND_DATA_REQUEST, formData, {
+    const response: AxiosResponse<Requests> = await axios.post(API.SEND_DATA_REQUEST, formData, { // Update the API endpoint here
       headers: {
         'Authorization': `Bearer ${userData.token}`,
-        'Content-Type': 'multipart/form-data', // Important for file uploads
+        'Content-Type': 'multipart/form-data',
       },
     });
 
-    if (response.data && response.data.status === 'success') {
+    if (response.data && response.data.status === true) {
       console.log('Request uploaded successfully');
     } else {
       console.error('Failed to upload request:', response.data.message);

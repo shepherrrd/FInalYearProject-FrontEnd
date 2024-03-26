@@ -28,11 +28,12 @@ export type UploadRequest = {
 };
 
 export type displayRequest = {
-  no: number;
-  reqNo: number;
+  id: number;
+  description: number;
   name: string;
-  date: string;
+  isApproved: string;
   time: string;
+  timeCreated: string;
 };
 
 export type uploadClinicalData = {
@@ -41,3 +42,13 @@ export type uploadClinicalData = {
   medicalRecordTypes: string;
   PublicKey: string;
 };
+
+export interface RequestItems {
+  passport: string;
+  name: string;
+  description: string;
+  irbProposal: string;
+  irbApproval: string;
+  reason: string;
+  id:number;
+}

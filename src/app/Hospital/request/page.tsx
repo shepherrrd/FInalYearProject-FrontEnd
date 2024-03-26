@@ -60,12 +60,12 @@ export default function Hospitalreq() {
           active
           onClick={() => router.push("/Hospital/request")}
         />
-      </SideNavbar>{" "}
+      </SideNavbar>
       <div className="flex-1 md:flex h-screen relative">
         <div className="mt-16 flex flex-col w-full">
           <div className="bg-[#F8F8F8] min-h-[100%] flex justify-center items-center">
             <div className="bg-white p-4 w-11/12 h-screen max-h-[98%]  ">
-              <p className="text-2xl font-bold">Users</p>
+              <p className="text-2xl font-bold">Requests</p>
               <div className="flex justify-center">
                 <form className="w-[60rem]">
                   <label className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">
@@ -181,9 +181,21 @@ export default function Hospitalreq() {
                                   ).toLocaleTimeString()}
                                 </td>
                                 <td className="whitespace-nowrap py-4 lg:px-4">
-                                  <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                    View
-                                  </button>
+                                <button
+  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+  onClick={() => {
+    localStorage.setItem('selectedItem', JSON.stringify(item));
+    const storedItem = localStorage.getItem('selectedItem');
+    if (storedItem) {
+      console.log('Saved item:', JSON.parse(storedItem));
+    } else {
+      console.log('No item saved in localStorage');
+    }
+    router.push("/Hospital/viewrequest");
+  }}
+>
+  View
+</button>
                                 </td>
                               </tr>
                             ))}
