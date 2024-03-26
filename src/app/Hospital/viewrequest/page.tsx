@@ -1,30 +1,32 @@
 "use client";
 import SideNavbar, { SidebarItem } from "@/components/SideNavbar";
 import { UploadCloud, CopyCheck } from "lucide-react";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { RequestItems } from "@/hospital.types";
 import { API } from "@/constants/api.constants";
 import axios, { AxiosResponse } from "axios";
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { UserData } from "@/types/auth.types";
 
 export default function HospitalDashboard() {
   const router = useRouter();
   const [selectedItem, setSelectedItem] = useState<RequestItems | null>(null);
-  const [privateKey, setPrivateKey] = useState<string>('');
-  const [privateExponentKey, setPrivateExponentKey] = useState<string>('');
+  const [privateKey, setPrivateKey] = useState<string>("");
+  const [privateExponentKey, setPrivateExponentKey] = useState<string>("");
 
   useEffect(() => {
-    const item = JSON.parse(localStorage.getItem("selectedItem") || '{}') as RequestItems;
+    const item = JSON.parse(
+      localStorage.getItem("selectedItem") || "{}"
+    ) as RequestItems;
     console.log(item);
     setSelectedItem(item);
   }, []);
   return (
     <div className="flex">
       <SideNavbar>
-        <SidebarItem 
+        <SidebarItem
           icon={<UploadCloud size={20} />}
           text="Upload"
           active={undefined}
@@ -55,82 +57,118 @@ export default function HospitalDashboard() {
               <p className="mb-4">Nigeria</p>
             </div>
             <div className="flex flex-col space-y-4 mb-4">
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 rounded w-full h-12 text-center"
-                onClick={() => selectedItem && window.open(selectedItem.reason, '_blank')}
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 rounded w-full h-12 text-center"
+                onClick={() =>
+                  selectedItem && window.open(selectedItem.reason, "_blank")
+                }
               >
                 View Request
               </button>
               <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 rounded w-full h-12 text-center"
-                onClick={() => selectedItem && window.open(selectedItem.irbApproval, '_blank')}
+                onClick={() =>
+                  selectedItem &&
+                  window.open(selectedItem.irbApproval, "_blank")
+                }
               >
                 IRB Approval
               </button>
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 rounded w-full h-12 text-center"
-                onClick={() => selectedItem && window.open(selectedItem.irbProposal, '_blank')}
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 rounded w-full h-12 text-center"
+                onClick={() =>
+                  selectedItem &&
+                  window.open(selectedItem.irbProposal, "_blank")
+                }
               >
                 Proposal
               </button>
             </div>
             <div className="flex justify-around pb-4">
-            <button
-  className="bg-red-500 hover:bg-red-700 text-white font-bold rounded w-32 h-12"
-  onClick={async () => {
-    const item = JSON.parse(localStorage.getItem("selectedItem") || '{}') as RequestItems;
-    if (!item || !privateKey || !privateExponentKey) {
-      alert('Please fill in all the required fields.');
-      return;
-    }
+              <button
+                className="bg-red-500 hover:bg-red-700 text-white font-bold rounded w-32 h-12"
+                onClick={async () => {
+                  const item = JSON.parse(
+                    localStorage.getItem("selectedItem") || "{}"
+                  ) as RequestItems;
+                  if (!item || !privateKey || !privateExponentKey) {
+                    alert("Please fill in all the required fields.");
+                    return;
+                  }
 
-    try {
-      const response = await axios.post(API.REJECT_REQUEST, {
-        privateKey,
-        privateExponentKey,
-        requestID: item.id,
-      });
+                  try {
+                    const response = await axios.patch(API.REJECT_REQUEST, {
+                      privateKey,
+                      privateExponentKey,
+                      requestID: item.id,
+                    });
 
-      if (response.data.status) {
-        alert('Request rejected successfully.');
-      } else {
-        alert(`Failed to reject request: ${response.data.message}`);
-      }
-    } catch (error) {
-      console.error('Error rejecting request:', error);
-      alert('Error rejecting request.');
-    }
-  }}
->
-  Reject
-</button>
-<button
-  className="bg-green-500 hover:bg-green-700 text-white font-bold rounded w-32 h-12"
-  onClick={async () => {
-    const item = JSON.parse(localStorage.getItem("selectedItem") || '{}') as RequestItems;
-    if (!item || !privateKey || !privateExponentKey) {
-      alert('Please fill in all the required fields.');
-      return;
-    }
+                    if (response.data.status) {
+                      alert("Request rejected successfully.");
+                    } else {
+                      alert(
+                        `Failed to reject request: ${response.data.message}`
+                      );
+                    }
+                  } catch (error) {
+                    console.error("Error rejecting request:", error);
+                    alert("Error rejecting request.");
+                  }
+                }}
+              >
+                Reject
+              </button>
+              <button
+                className="bg-green-500 hover:bg-green-700 text-white font-bold rounded w-32 h-12"
+                onClick={async () => {
+                  const item = JSON.parse(
+                    localStorage.getItem("selectedItem") || "{}"
+                  ) as RequestItems;
+                  if (!item || !privateKey || !privateExponentKey) {
+                    alert("Please fill in all the required fields.");
+                    return;
+                  }
 
-    try {
-      const response = await axios.post(API.ACCEPT_REQUEST, {
-        privateKey,
-        privateExponentKey,
-        requestID: item.id,
-      });
+                  try {
+                    const userDataString = localStorage.getItem("user");
+                    var userData = JSON.parse(
+                      userDataString as string
+                    ) as UserData;
+                    if (!userData) {
+                      console.error("User data not found in local storage");
+                      return;
+                    }
+                    var body = {
+                      privateKey: privateKey,
+                      privateExponentKey: privateExponentKey,
+                      requestID: item.id,
+                    };
+                    const response = await axios.patch(
+                      API.ACCEPT_REQUEST,
+                      body,
+                      {
+                        // Update the API endpoint here
+                        headers: {
+                          Authorization: `Bearer ${userData.token}`,
+                        },
+                      }
+                    );
 
-      if (response.data.status) {
-        alert('Request accepted successfully.');
-      } else {
-        alert(`Failed to accept request: ${response.data.message}`);
-      }
-    } catch (error) {
-      console.error('Error accepting request:', error);
-      alert('Error accepting request.');
-    }
-  }}
->
-  Accept
-</button>
+                    if (response.data.status) {
+                      alert("Request accepted successfully.");
+                    } else {
+                      alert(
+                        `Failed to accept request: ${response.data.message}`
+                      );
+                    }
+                  } catch (error) {
+                    console.error("Error accepting request:", error);
+                    alert("Error accepting request.");
+                  }
+                }}
+              >
+                Accept
+              </button>
             </div>
             <div className="mt-4">
               <input
@@ -155,12 +193,13 @@ export default function HospitalDashboard() {
             <p className="text-2xl font-bold">Reason for application</p>
             <div>
               <p className="p-4">
-                {selectedItem?.description || "Malaria has long been a scourge..."}
+                {selectedItem?.description ||
+                  "Malaria has long been a scourge..."}
               </p>
             </div>
           </div>
         </div>
-        </div>
       </div>
+    </div>
   );
 }

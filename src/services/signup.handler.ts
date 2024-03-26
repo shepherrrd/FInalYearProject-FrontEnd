@@ -6,7 +6,6 @@ import {
 } from "@/types/Signuptypes";
 import axios from "axios";
 
-
 export async function submitResearchCenterSignupDetails(
   formData: ResearchCenterSignupDetailsFormData
 ): Promise<SignupApiResponse> {
@@ -28,7 +27,11 @@ export async function submitResearchCenterSignupDetails(
   try {
     const response = await axios.post(API.RESEARCH_CENTER_SIGNUP, form);
     if (response.status === 200) {
-      return { status: true, message: response.data.message };
+      return {
+        status: true,
+        message: response.data.message,
+        data: response.data.data,
+      };
     } else if (response.status === 400) {
       return {
         status: false,
@@ -61,7 +64,6 @@ export async function submitResearchCenterSignupDetails(
     }
   }
 }
-
 
 export async function submitHospitalSignupDetails(
   formData: HospitalSignupDetailsFormData

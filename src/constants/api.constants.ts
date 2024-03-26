@@ -15,8 +15,8 @@ export const API = {
   GET_MEDICAL_RECORDS: `${API_URL}/api/ResearchCenter/GetMedicalRecords/1`,
   UPLOAD_CLINICAL_DATA: `${API_URL}/api/HospitalDashBoard/UploadData`,
   VerifyOTP: `${API_URL}/api/Registration/VerifyAccount`,
-  ACCEPT_REQUEST: `${API_URL}/api/HospitalDashBoard/UploadData`,
-  REJECT_REQUEST: `${API_URL}/api/HospitalDashBoard/UploadData`,
+  ACCEPT_REQUEST: `${API_URL}/api/HospitalDashBoard/ApproveRequest`,
+  REJECT_REQUEST: `${API_URL}/api/HospitalDashBoard/RejectRequest`,
 
   GET_RESOURCES: `${API_URL}/api/resources`,
   GET_RESOURCES_BY_HOSPITAL: `${API_URL}/api/resources-by-hospital`,
