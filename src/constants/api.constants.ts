@@ -1,6 +1,6 @@
 const IsLive = true;
 const API_URL = IsLive
-  ? "https://localhost:7028"
+  ? "https://finalyearproject-api.onrender.com"
   : "https://localhost:7028";
 
 export const API = {
@@ -14,6 +14,7 @@ export const API = {
   SEND_DATA_REQUEST: `${API_URL}/api/ResearchCenter/AddMedicalDataRequest`,
   GET_MEDICAL_RECORDS: `${API_URL}/api/ResearchCenter/GetMedicalRecords/1`,
   UPLOAD_CLINICAL_DATA: `${API_URL}/api/HospitalDashBoard/UploadData`,
+  VerifyOTP: `${API_URL}/api/Registration/VerifyAccount`,
   ACCEPT_REQUEST: `${API_URL}/api/HospitalDashBoard/UploadData`,
   REJECT_REQUEST: `${API_URL}/api/HospitalDashBoard/UploadData`,
 
